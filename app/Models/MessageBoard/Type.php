@@ -15,4 +15,15 @@ class Type extends Model
 
     protected $fillable = ['name'];
     protected static $logAttributes = ['name'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Tipo de atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Funcionário removido";
+        }
+
+        return "Novo tipo de adicionado";
+    }
 }

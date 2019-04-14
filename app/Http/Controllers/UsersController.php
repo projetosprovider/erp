@@ -348,7 +348,7 @@ class UsersController extends Controller
           $user = $request->user();
         }
 
-        $tasks = Task::where('user_id', $user->id)->limit(6)->orderBy('id', 'DESC')->get();
+        $person = $user->person;
 
         $departments = Department::all();
         $departamentoAtual = $user->person->department;
@@ -358,9 +358,8 @@ class UsersController extends Controller
 
         $roles = Role::all();
 
-        return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles'))
+        return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person'))
         ->with('user', $user)
-        ->with('tasks', $tasks)
         ->with('logs', TaskLogs::where('user_id', $user->id)->limit(6)->orderBy('id', 'DESC')->get())
         ->with('departments', Department::all());
     }

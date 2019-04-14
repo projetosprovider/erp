@@ -58,7 +58,7 @@ class Helper
 
     public static function getRouteForModel($model, $subject)
     {
-        $item = $model::findOrFail($subject);
+        $item = $model::find($subject);
 
         $route = null;
         $html = null;
@@ -68,9 +68,19 @@ class Helper
           $html = "<a href='.$route.'>".$item->title."</a>";
         }
 
+        if($model == 'App\Models\MessageBoard\Type') {
+          if($item) {
+            $route = route('message-types.edit', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
+        }
+
         if($model == 'App\Models\Client') {
-          $route = route('clients.show', $item->uuid);
-          $html = '<a href='.$route.'>'.$item->name.'</a>';
+
+          if($item) {
+            $route = route('clients.show', $item->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
+          }
         }
 
         if($model == 'App\Models\People') {
@@ -79,8 +89,21 @@ class Helper
         }
 
         if($model == 'App\Models\Client\Address') {
-          $route = route('client_addresses', $item->client->uuid);
-          $html = '<a href='.$route.'>'.$item->description.': '.$item->street.', '.$item->number.', '.$item->district.', '.$item->city.', '.$item->zip.'</a>';
+
+          if($item) {
+            $route = route('clients.show', $item->client->uuid);
+            $html = '<a href='.$route.'>'.$item->description.': '.$item->street.', '.$item->number.', '.$item->district.', '.$item->city.', '.$item->zip.'</a>';
+          }
+
+        }
+
+        if($model == 'App\Models\Client\Employee') {
+
+          if($item || $item->client !== null) {
+            $route = route('client_employees', $item->company->uuid);
+            $html = '<a href='.$route.'>'.$item->description.'</a>';
+          }
+
         }
 
         if($model == 'App\Models\MessageBoard') {

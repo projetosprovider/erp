@@ -1,81 +1,76 @@
 @extends('layouts.app')
 
+@section('page-title', 'Clientes')
+
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-4">
-            <h2>Clientes</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{route('clients.index')}}">Clientes</a>
-                </li>
-                <li class="active">
-                    <strong>Editar Cliente</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+  <div class="card-box">
+      <h6 class="font-13 m-t-0 m-b-30">Editar Cliente </h6>
+      <form method="post" action="{{route('clients.update', $client->uuid)}}">
+          {{csrf_field()}}
+          {{method_field('PUT')}}
 
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
+          <div class="row m-b-30">
 
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Editar Cliente</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <form method="post" class="form-horizontal" action="{{route('clients.update', $client->uuid)}}">
-                            {{csrf_field()}}
-                            {{method_field('PUT')}}
-                            <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Nome</label>
-                                <div class="col-sm-10">
-                                  <input type="text" required placeholder="Este campo é opcional" name="name" value="{{ $client->name }}" class="form-control"/>
-                                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+              <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="name">Nome</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                          <input type="text" id="name" name="name" value="{{ $client->name }}" class="form-control" placeholder="Informe o nome">
 
-                            <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">CPF/CNPJ</label>
-                                <div class="col-sm-10">
-                                    <input type="text" placeholder="Informe o CPF ou CNPJ" id="cpf" name="document" value="{{ $client->document }}" class="form-control"/>
-                                    {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+                      </div>
+                      {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                  </div>
+                  <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="phone">Telefone</label>
+                      <div class="input-group">
+                          <input type="text" id="phone" name="phone" value="{{ $client->phone }}" class="form-control" placeholder="Informe o Telefone">
 
-                            <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
-                                <label class="col-sm-2 control-label">Email</label>
-                                <div class="col-sm-10">
-                                  <input type="text" required name="email" value="{{ $client->email }}" class="form-control"/>
-                                    {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+                      </div>
+                      {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
 
-                            <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                                <label class="col-sm-2 control-label">Telefone</label>
-                                <div class="col-sm-10">
-                                  <input type="text" required name="phone" value="{{ $client->phone }}" class="form-control inputPhone"/>
-                                    {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+              <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="document">CPF/CNPJ</label>
+                      <div class="input-group">
+                          <input type="text" id="document" name="document"  value="{{ $client->document }}" class="form-control" placeholder="Informe o CPF ou CNPJ">
 
-                            <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                                <label class="col-sm-2 control-label">Ativo</label>
-                                <div class="col-sm-10">
-                                  <input type="checkbox" name="active" class="js-switch" value="{{ 1 }}" {{ $client->active ? 'checked' : '' }}/>
-                                    {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+                      </div>
+                      {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
+                  </div>
+                  <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="active">Ativo</label>
+                      <div class="input-group">
+                          <input type="checkbox" id="active" name="active" data-plugin="switchery" {{ $client->active ? 'checked' : '' }} value="{{ 1 }}">
 
-                            <button class="btn btn-primary">Salvar</button>
-                            <a class="btn btn-white" href="{{ route('clients.index') }}">Cancelar</a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                      </div>
+                      {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                  </div>
+
+              </div>
+
+              <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="email">Email</label>
+                      <div class="input-group">
+                          <input type="text" id="email" name="email"  value="{{ $client->email }}" class="form-control" placeholder="Informe o email">
+
+                      </div>
+                      {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+                  </div>
+              </div>
+
+          </div>
+
+
+          <button class="btn btn-custom">Salvar</button>
+          <a class="btn btn-default" href="{{ route('clients.show', $client->uuid) }}">Cancelar</a>
+      </form>
+  </div>
 
 @endsection

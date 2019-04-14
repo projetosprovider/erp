@@ -166,6 +166,22 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+          $employee = Employee::uuid($id);
+
+          $employee->delete();
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Funcionário removido com sucesso.'
+          ]);
+
+        } catch(\Exception $e) {
+          return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+          ]);
+        }
     }
 }

@@ -247,7 +247,7 @@ class UserTableSeeder extends Seeder
               ]);
 
               //$user->profile()->save(new Profile());
-              $user->attachRole($userRole);
+              $user->attachRole($adminRole);
               $user->save();
           }
           // code...

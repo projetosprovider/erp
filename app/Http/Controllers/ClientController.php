@@ -32,7 +32,7 @@ class ClientController extends Controller
 
         $clients = [];
 
-        $clients = Client::where('active', 1);
+        $clients = Client::where('id', '>', 0);
 
         if($request->filled('search')) {
 

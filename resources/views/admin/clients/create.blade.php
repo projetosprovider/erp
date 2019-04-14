@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
+                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="email">Email</label>
                         <div class="input-group">
                             <input type="text" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Informe o email">

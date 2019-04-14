@@ -62,7 +62,7 @@
                 <div class="form-group {!! $errors->has('company_id') ? 'has-error' : '' !!}">
                     <label class="col-form-label" for="company_id">Empresa</label>
                     <div class="input-group">
-                        <select class="selectpicker show-tick" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="company_id" required>
+                        <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="company_id" required>
                               @foreach($companies as $companyItem)
                                   <option value="{{$company->uuid}}" {{ $company->uuid == $companyItem->uuid || old('company_id') == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
                               @endforeach

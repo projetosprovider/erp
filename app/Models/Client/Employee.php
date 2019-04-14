@@ -21,4 +21,15 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Models\Client', 'company_id');
     }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Funcionário atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Funcionário Removido";
+        }
+
+        return "Funcionário Adicionado";
+    }
 }

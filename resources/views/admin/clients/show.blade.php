@@ -6,9 +6,9 @@
 
 <div class="card-box">
     <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
-    
+
     @permission('create.clientes')
-        <a href="{{route('client_employee_create', $client->uuid)}}" class="btn btn-default dim m-t-lg"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
+        <a href="{{route('client_employee_create', $client->uuid)}}" class="btn btn-default text-success m-t-lg"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
     @endpermission
 
     @permission('create.clientes')
@@ -68,6 +68,7 @@
                         <th>Nome</th>
                         <th>Email</th>
                         <th>CPF</th>
+                        <th>Ativo</th>
                         <th>Opções</th>
                       </tr>
                   </thead>
@@ -91,13 +92,21 @@
                                   <a>{{$employee->cpf}}</a>
                               </td>
 
+                              <td class="project-title">
+                                @if($employee->active)
+                                  <span class="badge badge-custom">Ativo</span>
+                                @else
+                                  <span class="badge badge-danger">Inativo</span>
+                                @endif
+                              </td>
+
                               <td class="project-actions">
                                 @permission('edit.clientes')
-                                  <a href="{{route('client_employee_edit', [$client->uuid, $employee->uuid])}}" class="btn btn-white btn-block"><i class="far fa-edit"></i>  Editar</a>
+                                  <a href="{{route('client_employee_edit', [$client->uuid, $employee->uuid])}}" class="btn btn-default"><i class="far fa-edit"></i> </a>
                                 @endpermission
 
                                 @permission('delete.clientes')
-                                  <a data-route="{{route('client_employee_destroy', ['id' => $employee->uuid])}}" class="btn btn-danger btn-outline btn-block btnRemoveItem"><i class="fas fa-trash-alt"></i> Remover</a>
+                                  <a data-route="{{route('client_employee_destroy', ['id' => $employee->uuid])}}" class="btn btn-danger btnRemoveItem"><i class="fas fa-trash-alt"></i> </a>
                                 @endpermission
                               </td>
 
@@ -113,6 +122,10 @@
                     <h3 class="font-bold no-margins">
                         Nenhum registro encontrado.
                     </h3>
+
+                    @permission('create.clientes')
+                        <a href="{{route('client_employee_create', $client->uuid)}}" class="btn btn-default text-success p-m"><i class="fas fa-user-plus"></i> Novo Funcionário</a>
+                    @endpermission
                 </div>
             </div>
           @endif
@@ -153,11 +166,11 @@
 
                               <td class="project-actions">
                                 @permission('edit.clientes')
-                                  <a href="{{route('client_addresses_edit', [$client->uuid, $address->uuid])}}" class="btn btn-white btn-block"><i class="far fa-edit"></i>  Editar</a>
+                                  <a href="{{route('client_addresses_edit', [$client->uuid, $address->uuid])}}" class="btn btn-default"><i class="far fa-edit"></i> </a>
                                 @endpermission
 
                                 @permission('delete.clientes')
-                                  <a data-route="{{route('client_address_destroy', ['id' => $address->uuid])}}" class="btn btn-danger btn-outline btn-block btnRemoveItem"><i class="fas fa-trash-alt"></i> Remover</a>
+                                  <a data-route="{{route('client_address_destroy', ['id' => $address->uuid])}}" class="btn btn-danger btnRemoveItem"><i class="fas fa-trash-alt"></i> </a>
                                 @endpermission
                               </td>
 
@@ -173,6 +186,10 @@
                     <h3 class="font-bold no-margins">
                         Nenhum registro encontrado.
                     </h3>
+
+                    @permission('create.clientes')
+                        <a href="{{route('client_addresses_create', $client->uuid)}}" class="btn btn-default dim m-t-lg"><i class="fas fa-map-marked-alt"></i> Novo Endereço</a>
+                    @endpermission
                 </div>
             </div>
           @endif

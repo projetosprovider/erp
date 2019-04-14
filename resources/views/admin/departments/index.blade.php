@@ -1,84 +1,48 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Departamentos')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
 
-        <div class="col-lg-10">
-            <h2>Departamentos </h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li class="active">
-                    <strong>Departamentos</strong>
-                </li>
-            </ol>
-        </div>
-
-        <div class="col-lg-2">
-
-          @permission('create.departamentos')
-
-            <a href="{{route('department_create')}}" class="btn btn-primary btn-block dim m-t-lg">Novo Departamento</a>
-
-          @endpermission
-
-        </div>
+        @permission('create.departamentos')
+          <a href="{{route('department_create')}}" class="btn btn-custom  dim m-t-lg">Novo Departamento</a>
+        @endpermission
 
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
+
         <div class="row">
 
-            @foreach($departments as $department)
+          @foreach($departments as $department)
 
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                  <div class="widget style1 white-bg">
+              <div class="col-sm-4">
+                  <div class="card-box">
+                      <h6 class="text-muted font-13 m-t-0 text-uppercase"><i class="fa fa-user"></i> {{$department->user->person->name}}</h6>
+                      <h3 class="m-b-20 mt-3">{{$department->name}}</h3>
 
-                    <div class="row">
-
-                      <div class="col-xs-12">
-
-                        <h2>
-                            {{$department->name}}
-                        </h2>
-                        <ul class="list-unstyled m-t-md">
-                            <li>
-                                <span class="fa fa-user m-r-xs"></span>
-                                <label>Responsável:</label>
-                                {{$department->user->person->name}}
-                            </li>
-                        </ul>
-
-                      </div>
-
-                      <div class="col-xs-12">
-
-                        <div class="row">
-
-                          <div class="col-md-4 col-sm-6 col-xs-12 p-xxs">
-                              <a class="btn btn-primary btn-block" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
-                          </div>
-
-                          <div class="col-md-4 col-sm-6 col-xs-12 p-xxs">
-                              <a class="btn btn-success btn-block" href="{{ route('department_edit', $department->uuid) }}"><i class="fa fa-pencil"></i> Editar</a>
-                          </div>
-
-                          <div class="col-md-4 col-sm-6 col-xs-12 p-xxs">
-                              <a class="btn btn-danger btn-block btn-outline" href="{{route('department', ['id' => $department->uuid])}}"><i class="fa fa-cogs"></i> Processos</a>
-                          </div>
-
+                      <div class="row text-center m-t-30">
+                        <div class="col-4">
+                            <a class="btn btn-default btn-block text-success" href="{{ route('occupations.index', ['department' => $department->uuid]) }}"><i class="fa fa-tag"></i> ({{ $department->occupations->count() }}) Cargos</a>
                         </div>
-
-                      </div>
-
+                        <div class="col-4">
+                            <a class="btn btn-default btn-block" href="{{ route('department_edit', $department->uuid) }}"><i class="fa fa-pencil"></i> Editar</a>
+                        </div>
+                        <div class="col-4">
+                            <a class="btn btn-default btn-block text-danger" href="{{route('department', ['id' => $department->uuid])}}"><i class="fa fa-cogs"></i> Processos</a>
+                        </div>
+                    </div>
                   </div>
-                  </div>
-                </div>
+              </div>
 
-            @endforeach
+          @endforeach
+
         </div>
+
     </div>
 
 @endsection

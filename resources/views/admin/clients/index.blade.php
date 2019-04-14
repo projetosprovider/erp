@@ -20,9 +20,10 @@
         <div class="row">
             <div class="col-md-5"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
             <div class="col-md-2">
-              <select class="form-control selectpicker show-tick" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="status">
-                  <option value="false">Inativo</option>
-                  <option value="true">Ativo</option>
+              <select class="select2" data-live-search="true" title="Situação" data-style="btn-white" data-width="100%" placeholder="Situação" name="status">
+                  <option value="">Situação</option>
+                  <option value="1">Ativo</option>
+                  <option value="0">Inativo</option>
               </select>
             </div>
             <div class="col-md-3"><input name="address" type="text" placeholder="CEP, Endereço" class="form-control"></div>
@@ -87,17 +88,15 @@
                             <td class="project-actions">
 
                               @permission('view.clientes')
-                                <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="btn btn-default"><i class="fa fa-info"></i> </a>
+                                <a href="{{route('clients.show', ['id' => $client->uuid])}}" class="btn btn-default text-success"><i class="fa fa-info"></i> </a>
                               @endpermission
 
                               @permission('edit.clientes')
                                 <a href="{{route('clients.edit', ['id' => $client->uuid])}}" class="btn btn-default"><i class="far fa-edit"></i> </a>
                               @endpermission
 
-                              <a href="{{route('client_addresses', $client->uuid)}}" class="btn btn-default"><i class="fas fa-map-marked-alt"></i> </a>
-
                               @permission('delete.clientes')
-                                <a data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="btn btn-danger btn-outline btnRemoveItem"><i class="fas fa-user-times"></i> </a>
+                                <a data-route="{{route('clients.destroy', ['id' => $client->uuid])}}" class="btn btn-default text-danger btnRemoveItem"><i class="fas fa-user-times"></i> </a>
                               @endpermission
                             </td>
 
@@ -114,10 +113,10 @@
 
             <div class="widget white-bg no-padding">
                 <div class="p-m text-center">
-                    <h1 class="m-md"><i class="far fa-folder-open fa-4x"></i></h1>
-                    <h3 class="font-bold no-margins">
-                        Nenhum registro encontrado, para o parametros informados.
-                    </h3>
+                    <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
+                    <h4 class="font-bold no-margins">
+                        Nenhum registro encontrado para o parametros informados.
+                    </h4>
                 </div>
             </div>
 

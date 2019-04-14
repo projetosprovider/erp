@@ -43,4 +43,35 @@ class TimesAgo
          }
      }
 
+     public static function diffBetween($time, $end)
+     {
+          if(!$time) {
+              return '';
+          }
+
+          if(!$end) {
+              return 'Não Finalizada';
+          }
+
+          if(!$time instanceof \DateTime) {
+             return '';
+          }
+
+          $out    = '';
+          $now    = $end; // current time
+          $diff   = date_timestamp_get($end) - date_timestamp_get($time); // difference between the current and the provided dates
+
+          if( $diff < 60 ) {
+              return self::TIMEBEFORE_NOW;
+          } elseif( $diff < 3600 ) {
+             return str_replace( '{num}', ( $out = round( $diff / 60 ) ), $out == 1 ? self::TIMEBEFORE_MINUTE : self::TIMEBEFORE_MINUTES );
+          } elseif( $diff < 3600 * 24 ) {
+             return str_replace( '{num}', ( $out = round( $diff / 3600 ) ), $out == 1 ? self::TIMEBEFORE_HOUR : self::TIMEBEFORE_HOURS );
+          } elseif( $diff < 3600 * 24 * 2 ) {
+             return self::TIMEBEFORE_YESTERDAY;
+          } else {
+             return strftime( $time->format('Y') == date( 'Y' ) ? self::TIMEBEFORE_FORMAT : self::TIMEBEFORE_FORMAT_YEAR, $time->format('Y') );
+          }
+      }
+
 }

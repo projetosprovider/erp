@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
 
@@ -73,7 +73,7 @@
 
                             <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Previlégio</label>
                                 <div class="col-sm-10">
-                                  <select id="roles" name="roles" required class="selectpicker show-tick" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%">
+                                  <select id="roles" name="roles" required class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%">
                                     @foreach($roles as $role)
                                       <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
@@ -84,7 +84,7 @@
 
                             <div class="form-group"><label class="col-sm-2 control-label">Departamento</label>
                               <div class="col-sm-10">
-                              <select class="selectpicker show-tick select-occupations" name="department_id" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" required>
+                              <select class="select2 select-occupations" name="department_id" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" required>
                                 @foreach($departments as $department)
                                     <option value="{{$department->uuid}}">{{$department->name}}</option>
                                 @endforeach
@@ -94,7 +94,7 @@
 
                             <div class="form-group"><label class="col-sm-2 control-label">Cargo</label>
                               <div class="col-sm-10">
-                              <select class="selectpicker show-tick occupation" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
+                              <select class="select2 occupation" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
                                 @foreach($occupations as $occupation)
                                     <option value="{{$occupation->uuid}}">{{$occupation->name}}</option>
                                 @endforeach
