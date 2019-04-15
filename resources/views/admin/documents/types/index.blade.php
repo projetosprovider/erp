@@ -32,15 +32,18 @@
 
         @empty
 
-            <div class="widget white-bg p-lg text-center">
-                <div class="m-b-md">
-                    <h3 class="font-bold">
-                        <i class="fa fa-search"></i> Nada Encontrado...
-                    </h3>
-                    <br/>
-                    <a class="btn btn-white btn-lg" href="{{ route('home') }}">Voltar</a>
-                </div>
-            </div>
+        <div class="col-sm-12">
+
+          <div class="widget white-bg no-padding m-t-30">
+              <div class="p-m text-center">
+                  <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
+                  <h4 class="font-bold no-margins">
+                      Nenhum registro encontrado.
+                  </h4>
+              </div>
+          </div>
+
+        </div>
 
         @endforelse
 

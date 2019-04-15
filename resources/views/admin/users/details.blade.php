@@ -29,8 +29,6 @@
                         <p class="text-muted">{{$person->department->name}} / {{$person->occupation->name}}</p>
                     </div>
 
-                    <button class="btn btn-primary m-t-10" data-toggle="modal" data-target="#editar"><i class="fa fa-edit"></i> Editar</button>
-                    <button class="btn btn-default m-t-10" data-toggle="modal" data-target="#editar-configuracoes"><i class="fa fa-cogs"></i> Configurações</button>
                     <a href="{{route('user_permissions', ['id' => $user->uuid])}}" class="btn btn-default text-danger m-t-10">Permissões</a>
                     <button class="btn btn-default m-t-10" data-toggle="modal" data-target="#editar-senha">Alterar Senha</button>
 
@@ -187,237 +185,203 @@
                 </div>
             </div>
             <div class="tab-pane" id="profile-b1">
-                <!-- Personal-Information -->
-                <div class="panel panel-default panel-fill">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Editar Perfil</h3>
-                    </div>
-                    <div class="panel-body">
 
-                        <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->id])}}" method="post">
-                            {{csrf_field()}}
+                <div class="row">
 
-                            <div class="row m-b-30">
+                    <div class="col-md-8">
 
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label class="col-form-label">Nome</label>
-                                      <div class="input-group">
-                                        <input type="text" required name="name" value="{{$user->person->name}}" class="form-control">
-                                      </div>
-                                  </div>
+                        <div class="panel panel-default panel-fill">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Editar Perfil</h3>
+                            </div>
+                            <div class="panel-body">
 
-                                  <div class="form-group">
-                                      <label class="col-form-label">Departamento</label>
-                                      <div class="input-group">
-                                        <select class="select2 select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
-                                            @foreach($departments as $department)
-                                                <option value="{{$department->uuid}}" {{ $user->person->department_id == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
-                                            @endforeach
-                                        </select>
-                                      </div>
-                                  </div>
+                                <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->id])}}" method="post">
+                                    {{csrf_field()}}
 
-                                  <div class="form-group">
-                                      <label class="col-form-label">Avatar</label>
-                                      <div class="input-group">
-                                        <input type="file" name="avatar" class="filestyle" accept="image/*"/>
-                                      </div>
-                                  </div>
+                                    <div class="row m-b-30">
 
-                                </div>
+                                        <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label class="col-form-label">Nome</label>
+                                              <div class="input-group">
+                                                <input type="text" required name="name" value="{{$user->person->name}}" class="form-control">
+                                              </div>
+                                          </div>
 
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label class="col-form-label">CPF</label>
-                                      <div class="input-group">
-                                        <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control">
-                                      </div>
-                                  </div>
+                                          <div class="form-group">
+                                              <label class="col-form-label">Departamento</label>
+                                              <div class="input-group">
+                                                <select class="select2 select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
+                                                    @foreach($departments as $department)
+                                                        <option value="{{$department->uuid}}" {{ $user->person->department_id == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                              </div>
+                                          </div>
 
-                                  <div class="form-group">
-                                      <label class="col-form-label">Cargo</label>
-                                      <div class="input-group">
-                                        <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
+                                          <div class="form-group">
+                                              <label class="col-form-label">Avatar</label>
+                                              <div class="input-group">
+                                                <input type="file" name="avatar" class="filestyle" accept="image/*"/>
+                                              </div>
+                                          </div>
 
-                                            @foreach($occupations as $occupation)
-                                                <option value="{{$occupation->uuid}}" {{ $user->person->occupation_id == $occupation->id ? 'selected' : '' }}>{{$occupation->name}}</option>
-                                            @endforeach
+                                        </div>
 
-                                        </select>
-                                      </div>
-                                  </div>
+                                        <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label class="col-form-label">CPF</label>
+                                              <div class="input-group">
+                                                <input type="text" required name="cpf" value="{{$user->person->cpf}}" class="form-control">
+                                              </div>
+                                          </div>
 
-                                  <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                                      <label class="col-form-label" for="active">Ativo</label>
-                                      <div class="input-group">
-                                          <input type="checkbox" id="active" name="active" {{ $user->active ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
+                                          <div class="form-group">
+                                              <label class="col-form-label">Cargo</label>
+                                              <div class="input-group">
+                                                <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
 
-                                      </div>
-                                      {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                                  </div>
+                                                    @foreach($occupations as $occupation)
+                                                        <option value="{{$occupation->uuid}}" {{ $user->person->occupation_id == $occupation->id ? 'selected' : '' }}>{{$occupation->name}}</option>
+                                                    @endforeach
 
-                                </div>
+                                                </select>
+                                              </div>
+                                          </div>
 
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label class="col-form-label">E-mail</label>
-                                      <div class="input-group">
-                                        <input type="email" readonly name="email" value="{{$user->email}}" class="form-control">
-                                      </div>
-                                  </div>
+                                          <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                                              <label class="col-form-label" for="active">Ativo</label>
+                                              <div class="input-group">
+                                                  <input type="checkbox" id="active" name="active" {{ $user->active ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
 
-                                  @php
+                                              </div>
+                                              {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                                          </div>
 
-                                    $day = null;
+                                        </div>
 
-                                    if($user->person->birthday) {
-                                      $day = $user->person->birthday->format('d/m/Y');
-                                    }
+                                        <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label class="col-form-label">E-mail</label>
+                                              <div class="input-group">
+                                                <input type="email" readonly name="email" value="{{$user->email}}" class="form-control">
+                                              </div>
+                                          </div>
 
-                                  @endphp
+                                          @php
 
-                                  <div class="form-group">
-                                      <label class="col-form-label">Nascimento</label>
-                                      <div class="input-group">
-                                        <input type="text" name="birthday" value="{{$day}}" class="form-control inputDate">
-                                      </div>
-                                  </div>
-                                </div>
+                                            $day = null;
+
+                                            if($user->person->birthday) {
+                                              $day = $user->person->birthday->format('d/m/Y');
+                                            }
+
+                                          @endphp
+
+                                          <div class="form-group">
+                                              <label class="col-form-label">Nascimento</label>
+                                              <div class="input-group">
+                                                <input type="text" name="birthday" value="{{$day}}" class="form-control inputDate">
+                                              </div>
+                                          </div>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-custom">Salvar</button>
+
+                                </form>
 
                             </div>
-
-                            <button type="submit" class="btn btn-custom">Salvar</button>
-
-                        </form>
-
-                    </div>
-                </div>
-                <!-- Personal-Information -->
-            </div>
-        </div>
-    </div>
-
-    <div class="modal inmodal" id="editar" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content animated bounceInRight">
-                <div class="modal-header">
-                    <h4 class="modal-title">Editar Informações</h4>
-                </div>
-                <form enctype="multipart/form-data" action="{{route('user_update', ['id' => $user->id])}}" method="post">
-                    {{csrf_field()}}
-                    <div class="modal-body">
-                        <div class="form-group"><label>Seu Nome</label> <input type="text" name="name" placeholder="Informe seu Nome" value="{{$user->person->name}}" class="form-control" required></div>
-                        <div class="form-group"><label>Avatar</label> <input type="file" name="avatar" class="filestyle" accept="image/*"/></div>
-                        <div class="form-group"><label>E-mail</label> <input type="email" readonly name="email" placeholder="Informe seu E-mail" value="{{$user->email}}" class="form-control"></div>
-                        <div class="form-group"><label>CPF</label> <input type="text" name="cpf" placeholder="Informe seu CPF" value="{{$user->person->cpf}}" class="form-control inputCpf" required></div>
-                        @php
-
-                          $day = null;
-
-                          if($user->person->birthday) {
-                            $day = $user->person->birthday->format('d/m/Y');
-                          }
-
-                        @endphp
-                        <div class="form-group"><label>Nascimento</label> <input type="text" name="birthday" placeholder="Data de Nascimento" value="{{$day}}" class="form-control inputDate" required></div>
-                        <div class="form-group"><label>Departamento</label>
-                            <select class="select2 select-occupations" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" name="department_id" required>
-
-                                @foreach($departments as $department)
-                                    <option value="{{$department->uuid}}" {{ $user->person->department_id == $department->id ? 'selected' : '' }}>{{$department->name}}</option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="form-group"><label>Cargo</label>
-                            <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
-
-                                @foreach($occupations as $occupation)
-                                    <option value="{{$occupation->uuid}}" {{ $user->person->occupation_id == $occupation->id ? 'selected' : '' }}>{{$occupation->name}}</option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal inmodal" id="editar-configuracoes" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content animated bounceInRight">
-                <div class="modal-header">
-                    <h4 class="modal-title">Configurações</h4>
-                </div>
-                <form action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
-                    {{csrf_field()}}
-                    <div class="modal-body">
-
-                        <div class="row">
-
-                          <div class="form-group col-sm-4"><label>Usuário SOC</label>
-                            <input type="text" name="login_soc" value="{{ $user->login_soc ? $user->login_soc : '' }}" placeholder="" autocomplete="off" class="form-control">
-                          </div>
-
-                          <div class="form-group col-sm-4"><label>Senha SOC</label>
-                            <input type="password" name="password_soc" value="{{ $user->password_soc ? $user->password_soc : '' }}" placeholder="" autocomplete="off" class="form-control">
-                          </div>
-
-                          <div class="form-group col-sm-4"><label>ID SOC</label>
-                            <input type="text" name="id_soc" value="{{ $user->id_soc ? $user->id_soc : '' }}" placeholder="" autocomplete="off" class="form-control">
-                          </div>
-
-                          <div class="form-group col-sm-12 {!! $errors->has('roles') ? 'has-error' : '' !!}"><label>Acesso</label>
-
-                                <select id="role" name="roles" required="required" class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%">
-                                  @foreach($roles as $role)
-                                    <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
-                                  @endforeach
-                                </select>
-                                {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
-
-                          </div>
-
-                          <div class="form-group col-sm-6"><label>Executa Tarefas</label>
-                              <br/>
-                              <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary {{ $user->do_task ? 'active' : '' }}">
-                                  <input type="radio" name="do_task" id="option1" value="1" autocomplete="off" {{ $user->do_task ? 'checked' : '' }}> Sim
-                                </label>
-                                <label class="btn btn-primary {{ !$user->do_task ? 'active' : '' }}">
-                                  <input type="radio" name="do_task" id="option2" value="0" autocomplete="off" {{ !$user->do_task ? 'checked' : '' }}> Não
-                                </label>
-                              </div>
-                          </div>
-
-                          <div class="form-group col-sm-6"><label>Ativo</label>
-                            <br/>
-                            <div class="btn-group" data-toggle="buttons">
-                              <label class="btn btn-primary {{ $user->active ? 'active' : '' }}">
-                                <input type="radio" name="active" id="option3" value="1" autocomplete="off" {{ $user->active ? 'checked' : '' }}> Sim
-                              </label>
-                              <label class="btn btn-primary {{ !$user->active ? 'active' : '' }}">
-                                <input type="radio" name="active" id="option4" value="0" autocomplete="off" {{ !$user->active ? 'checked' : '' }}> Não
-                              </label>
-                            </div>
-                          </div>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+
+                    <div class="col-md-4">
+
+                      <div class="panel panel-default panel-fill">
+                          <div class="panel-heading">
+                              <h3 class="panel-title">Editar Configurações</h3>
+                          </div>
+                          <div class="panel-body">
+
+                            <form action="{{route('user_update_configurations', ['id' => $user->uuid])}}" method="post">
+                                @csrf
+
+                                <div class="row m-b-30">
+
+                                  <div class="col-md-12">
+
+                                      <div class="form-group">
+                                          <label class="col-form-label">Usuário SOC</label>
+                                          <div class="input-group">
+                                            <input type="text" name="login_soc" value="{{ $user->login_soc ?? '' }}" class="form-control">
+                                          </div>
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-12">
+
+                                      <div class="form-group">
+                                          <label class="col-form-label">Senha SOC</label>
+                                          <div class="input-group">
+                                            <input type="text" name="password_soc" value="{{$user->password_soc ?? ''}}" class="form-control" autocomplete="off">
+                                          </div>
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-12">
+
+                                      <div class="form-group">
+                                          <label class="col-form-label">ID SOC</label>
+                                          <div class="input-group">
+                                            <input type="text" name="id_soc" value="{{$user->id_soc??''}}" class="form-control">
+                                          </div>
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-12">
+
+                                      <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
+                                          <label class="col-form-label">Previlégios</label>
+                                          <div class="input-group">
+                                            <select id="role" name="roles" required="required" class="select2" title="Selecione">
+                                              @foreach($roles as $role)
+                                                <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                              @endforeach
+                                            </select>
+                                          </div>
+                                          {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-md-12">
+
+                                    <div class="form-group {!! $errors->has('do_task') ? 'has-error' : '' !!}">
+                                        <label class="col-form-label" for="do_task">Executa Tarefas</label>
+                                        <div class="input-group">
+                                            <input type="checkbox" id="do_task" name="do_task" {{ $user->do_task ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
+                                        </div>
+                                        {!! $errors->first('do_task', '<p class="help-block">:message</p>') !!}
+                                    </div>
+
+                                  </div>
+
+                                </div>
+
+                                <button type="submit" class="btn btn-custom">Salvar</button>
+                            </form>
+
+                          </div>
+                      </div>
+
                     </div>
-                </form>
+
             </div>
         </div>
     </div>
@@ -446,46 +410,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-
-      $(document).ready(function() {
-
-        let selectOccupations = $(".select-occupations");
-        let occupation = $("#occupation");
-
-        selectOccupations.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-
-          let self = $(this);
-          let route = self.data('search-occupations');
-          let value = self.val();
-
-          $.ajax({
-            type: 'GET',
-            url: route + '?param=' + value,
-            async: true,
-            success: function(response) {
-
-              let html = "";
-              occupation.html("");
-              occupation.selectpicker('refresh');
-
-              $.each(response.data, function(idx, item) {
-
-                  html += "<option value="+ item.uuid +">"+ item.name +"</option>";
-
-              });
-
-              occupation.append(html);
-              occupation.selectpicker('refresh');
-
-            }
-          })
-
-        });
-
-      });
-
-    </script>
-@endpush

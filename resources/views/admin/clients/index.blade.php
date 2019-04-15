@@ -8,7 +8,7 @@
         <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
 
         @permission('create.clientes')
-            <a href="{{route('clients.create')}}" class="btn btn-primary dim m-t-lg"><i class="fas fa-user-plus"></i> Novo Cliente</a>
+            <a href="{{route('clients.create')}}" class="btn btn-custom"><i class="fas fa-user-plus"></i> Novo Cliente</a>
         @endpermission
 
     </div>

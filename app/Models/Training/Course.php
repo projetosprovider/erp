@@ -16,4 +16,15 @@ class Course extends Model
     protected $fillable = ['title', 'description', 'workload', 'created_by', 'grade'];
 
     protected static $logAttributes = ['title', 'description', 'workload', 'created_by', 'grade'];
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        if($eventName == 'updated') {
+            return "Curso atualizado";
+        } elseif ($eventName == 'deleted') {
+            return "Curso removido";
+        }
+
+        return "Curso adicionado";
+    }
 }

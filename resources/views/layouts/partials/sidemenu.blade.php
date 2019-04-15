@@ -18,11 +18,13 @@
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
             <li class="dropdown notification-list">
+              <!--
                 <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
                     <i class="mdi mdi-bell noti-icon"></i>
                     <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
                 </a>
+              -->
                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
 
                     <!-- item-->
@@ -167,14 +169,6 @@
 
                       <li>
                           <a href="{{route('courses.index')}}" ><i class="fa fa-book"></i> <span class="nav-label">Cursos</span> </a>
-                      </li>
-
-                    @endpermission
-
-                    @permission('view.alunos')
-
-                      <li>
-                          <a href="{{route('students.index')}}" ><i class="fa fa-users"></i> <span class="nav-label">Alunos</span> </a>
                       </li>
 
                     @endpermission

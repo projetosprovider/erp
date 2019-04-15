@@ -1,25 +1,8 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Regras de Acesso')
 
 @section('content')
-
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-12">
-            <h2>Regras de Acesso </h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{ route('users') }}">Usuários</a>
-                </li>
-                <li class="active">
-                    <strong>Permissões</strong>
-                </li>
-            </ol>
-        </div>
-
-    </div>
-
 
     <div class="row">
             <div class="col-lg-12">
@@ -75,11 +58,13 @@
                                                 </td>
                                                 <td class="project-actions">
 
-                                                    <a data-route="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
-                                                      class="btn btn-danger dim btnPermissionRevoke {{ !$hasPermission ? 'hidden' : '' }}" id="btnPermissionRevoke"><i class="fas fa-ban"></i> </a>
+                                                    <input type="hidden" data-route="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}" class="inputPermissionGrant"/>
+                                                    <input type="hidden" data-route="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" class="inputPermissionRevoke"/>
 
-                                                    <a data-route="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
-                                                      class="btn btn-primary dim btnPermissionGrant {{ $hasPermission ? 'hidden' : '' }}" id="btnPermissionGrant"><i class="fas fa-check"></i>  </a>
+                                                    <input type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                      data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                      data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
+                                                      data-plugin="switchery" value="1"/>
 
                                                 </td>
                                             </tr>

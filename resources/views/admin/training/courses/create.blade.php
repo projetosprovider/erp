@@ -1,99 +1,77 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Cursos')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-12">
-            <h2>Cursos</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{ route('courses.index') }}">Cursos</a>
-                </li>
-                <li class="active">
-                    <strong>Novo Curso</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Novo Curso </h6>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
+        <form method="post" action="{{route('courses.store')}}">
 
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Novo Curso</h5>
+            {{csrf_field()}}
+
+            <div class="row m-b-30">
+                <div class="col-md-12">
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group {!! $errors->has('title') ? 'has-error' : '' !!}">
+                            <label class="col-form-label" for="title">Titulo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-book"></i></span>
+                                </div>
+                                <input type="text" id="title" name="title" class="form-control" autofocus placeholder="Informe o titulo">
+
+                            </div>
+                            {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-6">
+
+                        <div class="form-group {!! $errors->has('workload') ? 'has-error' : '' !!}">
+                            <label class="col-form-label" for="workload">Carga Horária</label>
+                            <div class="input-group">
+                                <input type="number" id="workload" name="workload" class="form-control" value="10">
+
+                            </div>
+                            {!! $errors->first('workload', '<p class="help-block">:message</p>') !!}
+                        </div>
+
+                      </div>
+
+                  </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group {!! $errors->has('description') ? 'has-error' : '' !!}">
+                        <label class="col-form-label" for="description">Descrição</label>
+                        <div class="input-group">
+                            <textarea name="description" rows="4" class="form-control summernote"></textarea>
+                        </div>
+                        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                     </div>
-                    <div class="ibox-content">
 
-                        <form method="post" class="form-horizontal" action="{{route('courses.store')}}">
-
-                            {{csrf_field()}}
-
-                            <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
-                              <label class="col-sm-2 control-label">Titulo</label>
-                              <div class="col-sm-10">
-                                <input type="text" value="{{ old('title') }}" name="title" class="form-control" autofocus required/>
-
-                                @if ($errors->has('title'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
-                                @endif
-
-                              </div>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('workload') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Carga Horária (horas)</label>
-                                <div class="col-sm-10">
-                                  <input type="number" name="workload" value="2" min="1" max="200" class="form-control" required/>
-
-                                  @if ($errors->has('workload'))
-                                      <span class="help-block">
-                                          <strong>{{ $errors->first('workload') }}</strong>
-                                      </span>
-                                  @endif
-
-                                </div>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Descrição</label>
-                                <div class="col-sm-10">
-                                  <textarea name="description" rows="4" class="form-control summernote"></textarea>
-
-                                  @if ($errors->has('description'))
-                                      <span class="help-block">
-                                          <strong>{{ $errors->first('description') }}</strong>
-                                      </span>
-                                  @endif
-
-                                </div>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('grade') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Grade Curricular</label>
-                                <div class="col-sm-10">
-                                  <textarea name="grade" rows="4" class="form-control summernote"></textarea>
-                                  @if ($errors->has('grade'))
-                                      <span class="help-block">
-                                          <strong>{{ $errors->first('grade') }}</strong>
-                                      </span>
-                                  @endif
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary">Salvar</button>
-                            <a class="btn btn-white" href="{{ route('courses.index') }}">Cancelar</a>
-                        </form>
-                    </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group {!! $errors->has('grade') ? 'has-error' : '' !!}">
+                      <label class="col-form-label" for="grade">Grade Curricular</label>
+                      <div class="input-group">
+                            <textarea name="grade" rows="4" class="form-control summernote"></textarea>
+                      </div>
+                      {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
+                  </div>
                 </div>
             </div>
-        </div>
+
+            <button class="btn btn-custom">Salvar</button>
+            <a class="btn btn-default" href="{{ route('courses.index') }}">Cancelar</a>
+        </form>
+
     </div>
 
 @endsection

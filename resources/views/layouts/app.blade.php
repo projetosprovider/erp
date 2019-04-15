@@ -151,7 +151,8 @@
 
         $('.summernote').summernote({
           placeholder: '',
-          height: 250
+          height: 250,
+          width: '100%'
         });
 
         $(".btnBackPreviousPage").click(function(e) {
@@ -167,6 +168,61 @@
   	  $('.inputCpf').mask('000.000.000-00', {reverse: true});
     	$('.inputCnpj').mask('00.000.000/0000-00', {reverse: true});
   		$('.inputMoney').mask('000.000.000.000.000,00', {reverse: true});
+
+      let checkboxPermissions = $(".checkboxPermissions");
+
+      checkboxPermissions.change(function() {
+
+        var _self = $(this);
+        var isChecked = _self.checked;
+
+        console.log(_self);
+
+        var route = _self.data('route-grant');
+
+        if(isChecked) {
+          route = _self.data('route-revoke');
+        }
+
+        alert(route);
+
+        $.ajax({
+          headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           },
+          url: route,
+          type: 'POST',
+          dataType: 'json',
+          data: {}
+        }).done(function(data) {
+
+          if(data.success) {
+
+            const toast = swal.mixin({
+              toast: true,
+              position: 'top-center',
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+            toast({
+              type: 'success',
+              title: data.message
+            });
+
+          } else {
+
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: data.message,
+            })
+
+          }
+
+        });
+
+      });
 
       let selectClientAddress = $(".select-client-addresses");
       let selectAddress = $("#select-address");
@@ -229,6 +285,39 @@
 
             selectEmployee.append(html);
             //selectEmployee.trigger('change');
+
+          }
+        })
+
+      });
+
+      let selectOccupations = $(".select-occupations");
+      let occupation = $("#occupation");
+
+      selectOccupations.change(function () {
+
+        let self = $(this);
+        let route = self.data('search-occupations');
+        let value = self.val();
+
+        $.ajax({
+          type: 'GET',
+          url: route + '?param=' + value,
+          async: true,
+          success: function(response) {
+
+            let html = "";
+            occupation.html("");
+            occupation.selectpicker('refresh');
+
+            $.each(response.data, function(idx, item) {
+
+                html += "<option value="+ item.uuid +">"+ item.name +"</option>";
+
+            });
+
+            occupation.append(html);
+            occupation.selectpicker('refresh');
 
           }
         })

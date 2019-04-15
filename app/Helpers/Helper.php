@@ -64,8 +64,11 @@ class Helper
         $html = null;
 
         if($model == 'App\Models\Training\Course') {
-          $route = route('courses.edit', $item->uuid);
-          $html = "<a href='.$route.'>".$item->title."</a>";
+
+          if($item) {
+            $route = route('courses.edit', $item->uuid);
+            $html = "<a href=".$route.">".$item->title."</a>";
+          }
         }
 
         if($model == 'App\Models\MessageBoard\Type') {
