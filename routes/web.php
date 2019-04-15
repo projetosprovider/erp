@@ -133,6 +133,8 @@ Route::prefix('admin')->middleware('auth')->middleware('lock')->group(function (
   Route::get('clients/{id}/addresses/{address}/edit', 'AddressesController@edit')->name('client_addresses_edit');
   Route::put('clients/{id}/addresses/{address}/update', 'AddressesController@update')->name('client_addresses_update');
 
+  Route::get('clients/employees/search', 'ClientController@employees')->name('client_employees_search');
+
   Route::get('clients/{id}/employees', 'EmployeesController@show')->name('client_employees');
   Route::get('clients/{id}/employees/create', 'EmployeesController@create')->name('client_employee_create');
   Route::post('clients/{id}/employees', 'EmployeesController@store')->name('client_employee_store');

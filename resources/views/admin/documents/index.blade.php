@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
 
@@ -26,8 +26,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="wrapper wrapper-content animated fadeInUp">
-
-                @include('flash::message')
 
                 <div class="ibox">
                     <div class="ibox-title">

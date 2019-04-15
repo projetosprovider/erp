@@ -168,6 +168,73 @@
     	$('.inputCnpj').mask('00.000.000/0000-00', {reverse: true});
   		$('.inputMoney').mask('000.000.000.000.000,00', {reverse: true});
 
+      let selectClientAddress = $(".select-client-addresses");
+      let selectAddress = $("#select-address");
+
+      selectClientAddress.change(function() {
+
+        let self = $(this);
+        let route = self.data('search-addresses');
+        let value = self.val();
+
+        $.ajax({
+          type: 'GET',
+          url: route + '?param=' + value,
+          async: true,
+          success: function(response) {
+
+            let html = "";
+            selectAddress.html("");
+            selectAddress.trigger('change');
+
+            $.each(response.data, function(idx, item) {
+
+                let address = item.description +', '+item.street+', '+item.number+' - '+item.district+', '+item.city+' - '+item.zip;
+
+                html += "<option value="+ item.uuid +">"+ address +"</option>";
+
+            });
+
+            selectAddress.append(html);
+            selectAddress.trigger('change');
+
+          }
+        })
+
+      });
+
+      let selectClientEmployees = $(".select-client-employees");
+      let selectEmployee = $("#select-employee");
+
+      selectClientEmployees.change(function() {
+
+        let self = $(this);
+        let route = self.data('search-employees');
+        let value = self.val();
+
+        $.ajax({
+          type: 'GET',
+          url: route + '?param=' + value,
+          async: true,
+          success: function(response) {
+
+            let html = "";
+            selectEmployee.html("");
+            //selectEmployee.trigger('change');
+
+            $.each(response.data, function(idx, item) {
+                let employee = item.name +' - '+item.email;
+                html += "<option value="+ item.uuid +">"+ employee +"</option>";
+            });
+
+            selectEmployee.append(html);
+            //selectEmployee.trigger('change');
+
+          }
+        })
+
+      });
+
   		$("#select-department").change(function() {
 
 				var self = $(this);

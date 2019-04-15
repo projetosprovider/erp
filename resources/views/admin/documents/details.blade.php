@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @push('stylesheets')
         <link href="{{asset('admin/css/custom.css')}}" rel="stylesheet">
@@ -26,10 +26,6 @@
     </div>
     <div class="wrapper wrapper-content">
         <div class="row animated fadeInRight">
-
-            <div class="col-lg-12">
-                @include('flash::message')
-            </div>
 
             <div class="col-lg-2 col-md-4">
 

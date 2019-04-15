@@ -77,8 +77,6 @@ class ClientController extends Controller
             $clients->appends($key, $value);
         }
 
-
-
         return view('admin.clients.index', compact('clients', 'quantity'));
     }
 
@@ -160,9 +158,31 @@ class ClientController extends Controller
 
         } catch(\Exception $e) {
 
-          activity()
-         ->causedBy($request->user())
-         ->log('Erro ao buscar endereço do cliente: '. $e->getMessage());
+          return response()->json([
+            'success' => false,
+            'message' => 'Ocorreu um erro inesperado',
+            'data' => []
+          ]);
+
+        }
+
+    }
+
+    public function employees(Request $request)
+    {
+        $id = $request->get('param');
+
+        try {
+
+          $client = Client::uuid($id);
+
+          return response()->json([
+            'success' => true,
+            'message' => 'Registros retornados',
+            'data' => $client->employees
+          ]);
+
+        } catch(\Exception $e) {
 
           return response()->json([
             'success' => false,
