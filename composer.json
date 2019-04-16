@@ -19,6 +19,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "laravolt/avatar": "^2.2",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.4",
         "yadahan/laravel-authentication-log": "^1.1"
     },

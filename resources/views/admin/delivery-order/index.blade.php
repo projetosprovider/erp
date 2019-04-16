@@ -1,4 +1,6 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Ordem de Entrega')
 
 @section('content')
 

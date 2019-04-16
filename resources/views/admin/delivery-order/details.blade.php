@@ -1,4 +1,6 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Ordem de Entrega')
 
 @push('stylesheets')
         <link href="{{asset('admin/css/custom.css')}}" rel="stylesheet">

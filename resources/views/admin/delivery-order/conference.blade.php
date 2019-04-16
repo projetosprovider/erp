@@ -1,128 +1,100 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Ordem de Entrega')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-12">
-            <h2>Ordem de Entrega</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{route('delivery-order.index')}}">Ordem de Entrega</a>
-                </li>
-                <li class="active">
-                    <strong>Conferêcia</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card-box">
+                <h6 class="font-13 m-t-0 m-b-30">Conferência</h6>
+                <form method="post" class="form-horizontal" action="{{route('delivery-order.store')}}">
+                    {{csrf_field()}}
 
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
+                    @foreach($documents as $document)
+                      <input type="hidden" name="documents[]" value="{{ $document->uuid }}"/>
+                    @endforeach
 
-              <div class="col-lg-3">
-                  <div class="ibox float-e-margins">
-                      <div class="ibox-title">
-                          <h5>Conferência</h5>
-                      </div>
-                      <div class="ibox-content">
-
-                        <form method="post" class="form-horizontal" action="{{route('delivery-order.store')}}">
-                            {{csrf_field()}}
-
-                            @foreach($documents as $document)
-                              <input type="hidden" name="documents[]" value="{{ $document->uuid }}"/>
-                            @endforeach
-
-                            <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Entregador</label>
-                                <div class="col-sm-12">
-                                <select class="selectpicker show-tick select-entregador" data-search-user="{{ route('user_search') }}" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="delivered_by" required>
-                                      @foreach($delivers as $deliver)
-                                          <option value="{{$deliver->uuid}}">{{$deliver->name}}</option>
-                                      @endforeach
-                                  </select>
-                                    {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Entrega</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control inputDate" name="delivery_date"/>
-                                    {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
-                              <label class="col-sm-12">Anotações</label>
-                                <div class="col-sm-12">
-                                    <textarea class="form-control" name="annotations"></textarea>
-                                    {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-
-                            <button class="btn btn-primary btn-block">Gerar</button>
-                        </form>
-
-                      </div>
-                  </div>
-              </div>
-
-
-              @foreach($documents as $document)
-
-                <div class="col-lg-9">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>{{ $document->description }}, Gerado em: {{ $document->created_at->format('d/m/Y H:i') }}, Por {{ $document->creator->person->name }}</h5>
-                        </div>
-                        <div class="ibox-content">
-
-                          <div class="row">
-
-                          <div class="col-sm-9">
-
-                          <address>
-                            <strong>{{ $document->client->name }}</strong><br>
-                            {{ $document->address->street }}, {{ $document->address->number }}, {{ $document->address->reference }} {{ $document->address->complement }}<br>
-                            {{ $document->address->district }}, {{ $document->address->city }} {{ $document->address->zip }}<br>
-                            <abbr title="Telefone">P:</abbr> {{ $document->client->phone }}
-                            <br/>
-                            <abbr title="E-mail">E-mail:</abbr>
-                            <a href="mailto:{{ $document->client->email }}">{{ $document->client->email }}</a>
-                          </address>
-
-                          <address>
-                            <strong>Entregador</strong><br>
-                            <span id="entregador"><span class="text-navy">Selecione o Entregador</span></span>
-                          </address>
-
-                          </div>
-
-                          <div class="col-sm-3">
-                              {!! QrCode::size(150)->generate(route('start_delivery', $document->uuid)); !!}
-                          </div>
-
-                          </div>
-
+                    <div class="form-group {!! $errors->has('delivered_by') ? 'has-error' : '' !!}">
+                      <label class="col-sm-12">Entregador</label>
+                        <div class="col-sm-12">
+                          <select class="select2 select-entregador" data-search-user="{{ route('user_search') }}" name="delivered_by" required>
+                              <option value="">Selecione um entregador</option>
+                              @foreach($delivers as $deliver)
+                                  <option value="{{$deliver->uuid}}">{{$deliver->name}}</option>
+                              @endforeach
+                          </select>
+                          {!! $errors->first('delivered_by', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
-                </div>
 
-              @endforeach
+                    <div class="form-group {!! $errors->has('delivery_date') ? 'has-error' : '' !!}">
+                      <label class="col-sm-12">Entrega</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control inputDate" name="delivery_date"/>
+                            {!! $errors->first('delivery_date', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
 
+                    <div class="form-group {!! $errors->has('annotations') ? 'has-error' : '' !!}">
+                      <label class="col-sm-12">Anotações</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control" name="annotations"></textarea>
+                            {!! $errors->first('annotations', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
 
+                    <button class="btn btn-custom btn-block">Gerar</button>
+                </form>
+            </div>
+        </div>
 
+        <div class="col-lg-9">
+            <div class="card-box">
+                @foreach($documents as $document)
+
+                  <div class="col-lg-9">
+                      <div class="ibox float-e-margins">
+                          <div class="ibox-title">
+                              <h5>{{ $document->description }}, Gerado em: {{ $document->created_at->format('d/m/Y H:i') }}, Por {{ $document->creator->person->name }}</h5>
+                          </div>
+                          <div class="ibox-content">
+
+                            <div class="row">
+
+                              <div class="col-sm-12">
+
+                                <address>
+                                  <strong>{{ $document->client->name }}</strong><br>
+                                  {{ $document->address->street }}, {{ $document->address->number }}, {{ $document->address->reference }} {{ $document->address->complement }}<br>
+                                  {{ $document->address->district }}, {{ $document->address->city }} {{ $document->address->zip }}<br>
+                                  <abbr title="Telefone">P:</abbr> {{ $document->client->phone }}
+                                  <br/>
+                                  <abbr title="E-mail">E-mail:</abbr>
+                                  <a href="mailto:{{ $document->client->email }}">{{ $document->client->email }}</a>
+                                </address>
+
+                                <address>
+                                  <strong>Entregador</strong><br>
+                                  <span id="entregador"><span class="text-navy">Selecione o Entregador</span></span>
+                                </address>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+                      </div>
+                  </div>
+
+                @endforeach
+            </div>
         </div>
     </div>
 
 @endsection
 
-@push('scripts')
+@section('scripts')
     <script>
 
       $(document).ready(function() {
@@ -161,4 +133,4 @@
       });
 
     </script>
-@endpush
+@stop
