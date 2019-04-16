@@ -29,7 +29,6 @@
                         <p class="text-muted">{{$person->department->name}} / {{$person->occupation->name}}</p>
                     </div>
 
-                    <a href="{{route('user_permissions', ['id' => $user->uuid])}}" class="btn btn-default text-danger m-t-10">Permissões</a>
                     <button class="btn btn-default m-t-10" data-toggle="modal" data-target="#editar-senha">Alterar Senha</button>
 
                 </div>
@@ -49,6 +48,11 @@
             <li class="nav-item">
                 <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
                     Configurações
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#permissions" data-toggle="tab" aria-expanded="true" class="nav-link">
+                    Permissões
                 </a>
             </li>
         </ul>
@@ -380,10 +384,104 @@
                           </div>
                       </div>
 
-                    </div>
+                  </div>
+
+                </div>
 
             </div>
+            <div class="tab-pane" id="permissions">
+
+                  <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="panel panel-default panel-fill">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Editar Permissões</h3>
+                            </div>
+                            <div class="panel-body">
+
+                              <div class="panel-group" id="accordion">
+
+                                @foreach($modules as $key => $module)
+
+                                    @if($module->children->isNotEmpty())
+
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">
+                                              <h5 class="panel-title">
+                                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
+                                              </h5>
+                                          </div>
+                                          <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
+                                              <div class="panel-body">
+
+                                                @forelse($module->children as $item)
+
+                                                <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                                                  <h2>
+                                                      {{$item->name}}
+                                                  </h2>
+                                                </div>
+
+                                                <table class="table table-borderd">
+                                                    <tbody>
+                                                    @foreach($item->permissions as $permission)
+
+                                                    @php
+                                                        $hasPermission = $user->hasPermission($permission->slug);
+                                                    @endphp
+
+                                                    <tr>
+                                                        <td class="project-title">
+                                                            <p>Acesso:</p>
+                                                            <a href="#">{{$hasPermission ? 'SIM' : 'NÃO'}}</a>
+                                                        </td>
+                                                        <td class="project-title">
+                                                            <p>Nome:</p>
+                                                            <a href="#">{{$permission->name}}</a>
+                                                        </td>
+                                                        <td class="project-title">
+                                                            <p>Descrição:</p>
+                                                            <a href="#">{{$permission->description}}</a>
+                                                        </td>
+                                                        <td class="project-actions">
+
+                                                            <input type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
+                                                              data-plugin="switchery" value="1"/>
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                                @empty
+                                                    <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                                                @endforelse
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                    @endif
+
+                                @endforeach
+
+                              </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                  </div>
+
+            </div>
+
         </div>
+
     </div>
 
     <div class="modal inmodal" id="editar-senha" tabindex="-1" role="dialog" aria-hidden="true">

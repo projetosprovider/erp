@@ -57,7 +57,7 @@ class CoursesController extends Controller
 
         $request->validate([
           'title' => 'required|string|max:255|unique:courses',
-          'description' => 'required|string|max:255',
+          'description' => 'required|string',
           'workload' => 'required|integer|min:1',
         ]);
 

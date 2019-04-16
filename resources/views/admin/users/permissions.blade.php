@@ -58,9 +58,6 @@
                                                 </td>
                                                 <td class="project-actions">
 
-                                                    <input type="hidden" data-route="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}" class="inputPermissionGrant"/>
-                                                    <input type="hidden" data-route="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}" class="inputPermissionRevoke"/>
-
                                                     <input type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
                                                       data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
                                                       data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"

@@ -99,15 +99,6 @@ class UsersController extends Controller
         $modules = Module::all();
 
         $permissionsGroupedByModule = [];
-/*
-        foreach ($permissions as $key => $permission) {
-            $module = Module::findOrFail($permission->module_id);
-            if($module->children->isNotEmpty()) {
-                $permissionsGroupedByModule[$module->name][] = $module->children()->get();
-            }
-        }
-*/
-        #dd($permissionsGroupedByModule);
 
         $user = User::uuid($id);
 
@@ -358,7 +349,10 @@ class UsersController extends Controller
 
         $roles = Role::all();
 
-        return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person'))
+        $permissions = Permission::all();
+        $modules = Module::all();
+
+        return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person', 'modules'))
         ->with('user', $user)
         ->with('logs', TaskLogs::where('user_id', $user->id)->limit(6)->orderBy('id', 'DESC')->get())
         ->with('departments', Department::all());

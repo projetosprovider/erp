@@ -71,6 +71,14 @@ class Helper
           }
         }
 
+        if($model == 'App\User') {
+
+          if($item) {
+            $route = route('user', $item->uuid);
+            $html = "<a href=".$route.">".$item->name."</a>";
+          }
+        }
+
         if($model == 'App\Models\MessageBoard\Type') {
           if($item) {
             $route = route('message-types.edit', $item->uuid);

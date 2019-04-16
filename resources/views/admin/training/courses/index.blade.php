@@ -77,9 +77,22 @@
             {{ $courses->links() }}
 
         @else
-            <div class="alert alert-warning text-center">Nenhum cliente registrado até o momento.</div>
+
+            <div class="col-sm-12">
+
+              <div class="widget white-bg no-padding m-t-30">
+                  <div class="p-m text-center">
+                      <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
+                      <h4 class="font-bold no-margins">
+                          Nenhum registro encontrado.
+                      </h4>
+                  </div>
+              </div>
+
+            </div>
+
         @endif
 
     </div>
-    
+
 @endsection

@@ -117,9 +117,10 @@
                 </button>
             </li>
             <li class="hide-phone app-search">
-                <form role="search" class="">
-                    <input type="text" placeholder="Search..." class="form-control">
-                    <a href=""><i class="fa fa-search"></i></a>
+                <form role="search" class="" action="{{ route('clients.index') }}" method="get">
+                    <input type="text" placeholder="Pesquisar..." name="search" class="form-control">
+                    <a><i class="fa fa-search"></i></a>
+                    <button style="display:none"></button>
                 </form>
             </li>
         </ul>

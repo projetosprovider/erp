@@ -8,6 +8,7 @@
           <h6 class="font-13 m-t-0 m-b-30">Novo Recado</h6>
 
           <form method="post" action="{{ route('message-board.store') }}" enctype="multipart/form-data">
+
               {{ csrf_field() }}
 
               <div class="form-group row"><label class="col-sm-2 col-form-label">Departamento:</label>
@@ -56,13 +57,11 @@
 
               <div class="form-group row"><label class="col-sm-2 col-form-label">Anexos:</label>
 
-                  <div class="col-sm-10"><input name="files[]" type="file"
-                    accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
-                    class="filestyle" multiple/>
+                  <div class="col-sm-10">
+                    <input name="files[]" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
                   </div>
 
               </div>
-
 
               <div class="form-group row"><label class="col-sm-2 col-form-label">Importante:</label>
                   <div class="col-sm-10"><input name="important" type="checkbox" data-plugin="switchery" value=""></div>

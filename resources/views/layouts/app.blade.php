@@ -160,6 +160,12 @@
             return false;
         })
 
+        $(".filestyle").filestyle({
+          buttonText: "Escolher Arquivos",
+          buttonName: "btn btn-custom",
+          'placeholder': 'Escola um ou mais arquivos'
+        });
+
   		});
 
   		$('.inputDate').mask('00/00/0000');
@@ -174,17 +180,13 @@
       checkboxPermissions.change(function() {
 
         var _self = $(this);
-        var isChecked = _self.checked;
-
-        console.log(_self);
+        var isChecked = _self[0].checked;
 
         var route = _self.data('route-grant');
 
-        if(isChecked) {
+        if(isChecked !== true) {
           route = _self.data('route-revoke');
         }
-
-        alert(route);
 
         $.ajax({
           headers: {
@@ -411,7 +413,7 @@
 
     <script>
 
-  	$(".filestyle").filestyle({buttonText: "Escolher Arquivos", buttonName: "btn btn-default", 'placeholder': 'Escola um ou mais arquivos'});
+
 
   	$(".inputCep").blur(function() {
 
