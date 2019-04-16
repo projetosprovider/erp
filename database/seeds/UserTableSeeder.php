@@ -248,6 +248,11 @@ class UserTableSeeder extends Seeder
 
               //$user->profile()->save(new Profile());
               $user->attachRole($adminRole);
+
+              if($adminRole->id == 1) {
+                  $user->syncPermissions($permissions);
+              }
+
               $user->save();
           }
           // code...

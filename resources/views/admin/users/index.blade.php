@@ -21,6 +21,7 @@
               <div class="col-md-3"><input name="search" type="text" placeholder="ID, Nome, Documento, Email, ou Telefone" class="form-control"></div>
               <div class="col-md-2">
                 <select class="form-control select2 select-occupations" data-search-occupations="{{ route('occupation_search') }}" data-live-search="true" title="Departamento" data-style="btn-white" data-width="100%" placeholder="Departamento" name="department">
+                  <option value="">Selecionar Departamento</option>
                   @foreach($departments as $department)
                       <option value="{{$department->uuid}}">{{$department->name}}</option>
                   @endforeach
@@ -28,7 +29,7 @@
               </div>
               <div class="col-md-2">
                 <select class="form-control select2" id="occupation" data-live-search="true" title="Cargo" data-style="btn-white" data-width="100%" placeholder="Cargo" name="occupation">
-
+                    <option value="">Selecionar Departamento</option>
                 </select>
               </div>
               <div class="col-md-3">

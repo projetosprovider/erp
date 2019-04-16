@@ -38,7 +38,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
+/*
+        \Route::middleware('web')->group(function (Router $router) {
+            $router->impersonate();
+        });
+*/
         //
     }
 

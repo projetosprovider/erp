@@ -320,7 +320,9 @@ class UsersController extends Controller
         //$permissions = Permission::pluck('id');
         //$user->syncPermissions($permissions);
 
-        flash('Novo usuário adicionado com sucesso.')->success()->important();
+        notify()->flash('Sucesso!', 'success', [
+          'text' => 'Novo usuário adicionado com sucesso.'
+        ]);
 
         return redirect()->action('UsersController@index');
     }
@@ -457,8 +459,6 @@ class UsersController extends Controller
 
         if($user->id != $request->user()->id) {
 
-          $user->active = $data['active'];
-          $user->person->active = $data['active'];
           $user->person->save();
 
           notify()->flash('Sucesso!', 'info', [

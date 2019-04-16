@@ -362,7 +362,6 @@
   	    todayBtn: "linked",
   	    clearBtn: true,
   	    language: "pt-BR",
-  	    daysOfWeekDisabled: "0,6",
   	    calendarWeeks: true,
   	    autoclose: true,
   	    todayHighlight: true,

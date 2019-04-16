@@ -1,122 +1,138 @@
 @extends('layouts.app')
 
+@section('page-title', 'Usuários')
+
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-4">
-            <h2>Usuários</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li class="active">
-                    <strong>Novo Usuário</strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Novo Usuário</h6>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
+        <form method="post" action="{{route('users.store')}}">
 
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Novo Usuário</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <form method="post" class="form-horizontal" action="{{route('users.store')}}">
+            {{csrf_field()}}
 
-                            {{csrf_field()}}
+            <div class="row m-b-30">
 
-                            <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Nome</label>
-                                <div class="col-sm-10">
-                                  <input type="text" value="{{ old('name') }}" required name="name" autofocus class="form-control">
-                                  {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-                            <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">E-mail</label>
-                                <div class="col-sm-10">
-                                  <input type="text" autocomplete="off" value="{{ old('email') }}" required name="email" class="form-control">
-                                  {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Nome</label>
+                      <div class="input-group">
+                        <input type="text" required autocomplete="off" value="{{ old('name') }}" name="name" class="form-control">
+                      </div>
+                      {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                  </div>
 
-                            <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
-                                <label class="col-sm-2 control-label">Telefone</label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="phone" value="{{ old('phone') }}" class="form-control inputPhone"/>
-                                    {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
+                  <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">CPF</label>
+                      <div class="input-group">
+                        <input type="text" required value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
+                      </div>
+                      {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}
+                  </div>
 
-                            <div class="form-group {!! $errors->has('cpf') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">CPF</label>
-                                <div class="col-sm-10">
-                                  <input type="text" value="{{ old('cpf') }}" name="cpf" class="form-control inputCpf">
-                                  {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('birthday') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Nascimento</label>
-                                <div class="col-sm-10">
-                                  <input type="text" value="{{ old('birthday') }}" name="birthday" class="form-control inputDate">
-                                  {!! $errors->first('birthday', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('password') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Senha Acesso</label>
-                                <div class="col-sm-10">
-                                  <input type="password" autocomplete="off" value="{{ old('password') }}" name="password" class="form-control">
-                                  {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}"><label class="col-sm-2 control-label">Previlégio</label>
-                                <div class="col-sm-10">
-                                  <select id="roles" name="roles" required class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%">
-                                    @foreach($roles as $role)
-                                      <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                  </select>
-                                  {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group"><label class="col-sm-2 control-label">Departamento</label>
-                              <div class="col-sm-10">
-                              <select class="select2 select-occupations" name="department_id" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" data-search-occupations="{{ route('occupation_search') }}" required>
-                                @foreach($departments as $department)
-                                    <option value="{{$department->uuid}}">{{$department->name}}</option>
-                                @endforeach
-                              </select>
-                              </div>
-                            </div>
-
-                            <div class="form-group"><label class="col-sm-2 control-label">Cargo</label>
-                              <div class="col-sm-10">
-                              <select class="select2 occupation" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%"  id="occupation" name="occupation_id" required>
-                                @foreach($occupations as $occupation)
-                                    <option value="{{$occupation->uuid}}">{{$occupation->name}}</option>
-                                @endforeach
-                              </select>
-                              </div>
-                            </div>
-
-                            <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
-                                <label class="col-sm-2 control-label">Ativo</label>
-                                <div class="col-sm-10">
-                                  <input type="checkbox" name="active" class="js-switch" checked value="{{ 1 }}"/>
-                                    {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary">Salvar</button>
-                            <a class="btn btn-white" href="{{ route('clients.index') }}">Cancelar</a>
-                        </form>
-                    </div>
                 </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">E-mail</label>
+                      <div class="input-group">
+                        <input type="email" required value="{{ old('email') }}" name="email" class="form-control">
+                      </div>
+                      {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+                  </div>
+
+                  <div class="form-group {!! $errors->has('birthday') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Nascimento</label>
+                      <div class="input-group">
+                        <input type="text" required value="{{ old('birthday') }}" name="birthday" class="form-control inputDate" autocomplete="off" data-date-end-date="0d">
+                      </div>
+                      {!! $errors->first('birthday', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Telefone</label>
+                      <div class="input-group">
+                        <input type="text" required value="{{ old('phone') }}" name="phone" class="form-control inputPhone">
+                      </div>
+                      {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+                  </div>
+                  <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Ativo</label>
+                      <div class="input-group">
+                        <input type="checkbox" data-plugin="switchery" value="1" {{ old('active') || !request()->has('active') ? 'checked' : '' }} name="active" class="form-control">
+                      </div>
+                      {!! $errors->first('active', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
             </div>
-        </div>
+
+            <div class="row m-b-30">
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('department_id') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Departamento</label>
+                      <div class="input-group">
+                        <select class="select2 select-occupations" name="department_id" data-search-occupations="{{ route('occupation_search') }}" required>
+                          @foreach($departments as $department)
+                              <option value="{{$department->uuid}}">{{$department->name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      {!! $errors->first('department_id', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('occupation_id') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Cargo</label>
+                      <div class="input-group">
+                        <select class="select2 occupation" id="occupation" name="occupation_id" required>
+                          @foreach($occupations as $occupation)
+                              <option value="{{$occupation->uuid}}">{{$occupation->name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      {!! $errors->first('occupation_id', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
+            </div>
+
+            <div class="row m-b-30">
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('roles') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Previlégio</label>
+                      <div class="input-group">
+                        <select id="roles" name="roles" required class="select2">
+                          @foreach($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group {!! $errors->has('password') ? 'has-error' : '' !!}">
+                      <label class="col-form-label">Senha de Acesso</label>
+                      <div class="input-group">
+                        <input type="password" autocomplete="off" value="{{ old('password') }}" name="password" class="form-control">
+                      </div>
+                      {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
+                  </div>
+                </div>
+
+            </div>
+
+            <button class="btn btn-custom">Salvar</button>
+            <a class="btn btn-default" href="{{ route('users') }}">Cancelar</a>
+        </form>
+
     </div>
 
 @endsection

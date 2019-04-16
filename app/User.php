@@ -15,9 +15,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\Department;
 use App\Models\MessageBoard;
 
+use Lab404\Impersonate\Models\Impersonate;
+
 class User extends Authenticatable
 {
-    use Notifiable, AuthenticationLogable;
+    use Notifiable, AuthenticationLogable, Impersonate;
     use HasRoleAndPermission;
 
     use Uuids;
@@ -128,5 +130,13 @@ class User extends Authenticatable
         }
 
         return "Usuário Adicionado";
+    }
+
+    /**
+     * @return bool
+     */
+    public function canImpersonate()
+    {
+        return true;
     }
 }

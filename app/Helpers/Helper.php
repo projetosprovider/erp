@@ -75,7 +75,7 @@ class Helper
 
           if($item) {
             $route = route('user', $item->uuid);
-            $html = "<a href=".$route.">".$item->name."</a>";
+            $html = "<a href=".$route.">".$item->person->name."</a>";
           }
         }
 

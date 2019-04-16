@@ -119,6 +119,7 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
             'League\\Flysystem\\' => 17,
             'Laravolt\\Avatar\\' => 16,
             'Laravel\\Tinker\\' => 15,
+            'Lab404\\Impersonate\\' => 19,
         ),
         'J' => 
         array (
@@ -353,6 +354,10 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'Lab404\\Impersonate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lab404/laravel-impersonate/src',
+        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -498,6 +503,7 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Helpers\\Constants' => __DIR__ . '/../..' . '/app/Helpers/Constants.php',
         'App\\Helpers\\Helper' => __DIR__ . '/../..' . '/app/Helpers/Helper.php',
         'App\\Helpers\\Mapper' => __DIR__ . '/../..' . '/app/Helpers/Mapper.php',
         'App\\Helpers\\TimesAgo' => __DIR__ . '/../..' . '/app/Helpers/TimesAgo.php',
@@ -545,6 +551,8 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Jobs\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Jobs/DeliveryOrder.php',
+        'App\\Mail\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Mail/DeliveryOrder.php',
         'App\\Models\\Activity' => __DIR__ . '/../..' . '/app/Models/Activity.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
@@ -591,6 +599,8 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
         'App\\Models\\Training\\Team\\Lessons' => __DIR__ . '/../..' . '/app/Models/Training/Team/Lessons.php',
         'App\\Models\\Training\\Team\\Student' => __DIR__ . '/../..' . '/app/Models/Training/Team/Student.php',
         'App\\Models\\UserNotifications' => __DIR__ . '/../..' . '/app/Models/UserNotifications.php',
+        'App\\Notifications\\DeliveryOrder' => __DIR__ . '/../..' . '/app/Notifications/DeliveryOrder.php',
+        'App\\Observers\\UserObserver' => __DIR__ . '/../..' . '/app/Observers/UserObserver.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -2315,6 +2325,15 @@ class ComposerStaticInit6e3b4916a84433df4593bbfc724670fc
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
+        'Lab404\\Impersonate\\Controllers\\ImpersonateController' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Controllers/ImpersonateController.php',
+        'Lab404\\Impersonate\\Events\\LeaveImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Events/LeaveImpersonation.php',
+        'Lab404\\Impersonate\\Events\\TakeImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Events/TakeImpersonation.php',
+        'Lab404\\Impersonate\\Guard\\SessionGuard' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Guard/SessionGuard.php',
+        'Lab404\\Impersonate\\Impersonate' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Impersonate.php',
+        'Lab404\\Impersonate\\ImpersonateServiceProvider' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/ImpersonateServiceProvider.php',
+        'Lab404\\Impersonate\\Middleware\\ProtectFromImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Middleware/ProtectFromImpersonation.php',
+        'Lab404\\Impersonate\\Models\\Impersonate' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Models/Impersonate.php',
+        'Lab404\\Impersonate\\Services\\ImpersonateManager' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Services/ImpersonateManager.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',

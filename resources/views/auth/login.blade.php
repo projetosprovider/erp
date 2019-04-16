@@ -20,16 +20,15 @@
         <form class="form-horizontal" action="{{ route('login') }}" method="POST">
             @csrf
 
-            @foreach ($errors->all() as $error)
-
-                <div class="alert alert-danger">{{ $error }}</div>
-
-            @endforeach
-
             <div class="form-group m-b-20">
                 <div class="col-xs-12">
                     <label for="emailaddress">Email ou Login</label>
-                    <input class="form-control" name="email" type="text" id="emailaddress" required="" placeholder="Informe as suas credenciais">
+                    <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" name="email" type="text" id="emailaddress" required="" placeholder="Informe as suas credenciais">
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                 </div>
             </div>
 
@@ -37,7 +36,12 @@
                 <div class="col-xs-12">
                     <a href="{{ url('password/reset') }}" class="text-muted pull-right font-14">Esqueceu sua senha?</a>
                     <label for="password">Senha</label>
-                    <input class="form-control" name="password" type="password" required="" id="password" placeholder="Sua Senha">
+                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" type="password" required="" id="password" placeholder="Sua Senha">
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
                 </div>
             </div>
 

@@ -98,6 +98,18 @@
                         <i class="ti-lock"></i> <span>Bloquear Tela</span>
                     </a>
 
+                    @php
+
+                      $manager = app('impersonate');
+
+                    @endphp
+
+                    @if($manager->isImpersonating())
+                      <a href="{{ route('impersonate.leave') }}" class="dropdown-item notify-item">
+                          <i class="ti-power-off"></i> <span>Sair deste Usuário</span>
+                      </a>
+                    @endif
+
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item btnLogout">
                         <i class="ti-power-off"></i> <span>Logout</span>

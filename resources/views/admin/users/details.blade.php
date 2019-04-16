@@ -15,7 +15,6 @@
                     <div class="thumb-xl member-thumb m-b-10 center-page">
                         <img src="{{ route('image', ['user' => $person->user->uuid, 'link' => $person->user->avatar, 'avatar' => true])}}" class="rounded-circle img-thumbnail" alt="">
 
-
                         @if($person->active)
                             <i class="mdi mdi-star-circle member-star text-success" title="Ativo"></i>
                         @else
@@ -30,6 +29,9 @@
                     </div>
 
                     <button class="btn btn-default m-t-10" data-toggle="modal" data-target="#editar-senha">Alterar Senha</button>
+                    @if(auth()->user()->id !== $person->user->id)
+                      <a class="btn btn-default m-t-10" href="{{ route('impersonate', $person->user->id) }}">logar como</a>
+                    @endif
 
                 </div>
 

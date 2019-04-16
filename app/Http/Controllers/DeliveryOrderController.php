@@ -7,8 +7,14 @@ use App\Models\DeliveryOrder;
 use App\Models\{Documents,Client, People};
 use App\Models\Department\Occupation;
 use App\Models\DeliveryOrder\Documents as DeliveryOrderDocuments;
+use App\Helpers\Constants;
+use App\Notifications\DeliveryOrder as DeliveryOrderNotification;
+use App\Mail\DeliveryOrder as DeliveryOrderMail;
+use App\Jobs\DeliveryOrder as DeliveryOrderJob;
+use Notification;
 use Auth;
 use PDF;
+use Mail;
 
 class DeliveryOrderController extends Controller
 {
@@ -33,6 +39,8 @@ class DeliveryOrderController extends Controller
 
         $user = $request->user();
 
+        echo route('start_delivery', $delivery->uuid);
+
         $titulo = "etiquetas-".str_random();
 
         $file = \Storage::disk('local')->path($user->avatar);
@@ -41,6 +49,49 @@ class DeliveryOrderController extends Controller
 
         $pdf = PDF::loadView('pdf.tags', compact('delivery', 'file'));
         return $pdf->stream($titulo. ".pdf");
+    }
+
+    public function start($id, Request $request)
+    {
+        $delivery = DeliveryOrder::uuid($id);
+
+        //dd($delivery->status_id);
+
+        if($delivery->status_id == Constants::STATUS_DELIVERY_PENDENTE) {
+
+            $delivery->status_id = Constants::STATUS_DELIVERY_EM_TRANSITO;
+            //$delivery->save();
+
+            $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
+
+            $job = dispatch(new DeliveryOrderJob($delivery, 'Ordem de Entrega', $message));
+
+            dd($job);
+
+            return response($message, 200);
+
+        } elseif($delivery->status_id == Constants::STATUS_DELIVERY_EM_TRANSITO) {
+
+            $delivery->status_id = Constants::STATUS_DELIVERY_ENTREGUE;
+            //$delivery->save();
+
+            return response('A Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' foi entregue.', 200);
+        }
+
+        try {
+
+            DeliveryOrderJob::dispatch($delivery, 'Ordem de Entrega')->onQueue('emails');
+
+        } catch(\Exception $e) {
+
+        }
+
+        return abort(403);
+    }
+
+    public function status($id, Request $request)
+    {
+
     }
 
     /**

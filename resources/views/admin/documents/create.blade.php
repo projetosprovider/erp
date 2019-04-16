@@ -70,7 +70,7 @@
               <div class="form-group {!! $errors->has('employee_id') ? 'has-error' : '' !!}">
                   <label class="col-form-label">Funcionário</label>
                   <div class="input-group">
-                    <select class="select2 select-client-employees" data-search-employees="{{ route('client_employees_search') }}" id="select-employee" name="employee_id" required>
+                    <select class="select2 select-client-employees" data-search-employees="{{ route('client_employees_search') }}" id="select-employee" name="employee_id">
                           <option value="">Selecione um Cliente</option>
 
                     </select>

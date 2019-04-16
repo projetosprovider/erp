@@ -27,6 +27,8 @@ Route::get('/admin', function() {
 
 Route::prefix('admin')->middleware('auth')->middleware('lock')->group(function () {
 
+  Route::impersonate();
+
   # Tasks
   Route::get('tasks', 'TaskController@index')->name('tasks');
   Route::get('board', 'TaskController@showBoard')->name('board');
@@ -156,14 +158,12 @@ Route::prefix('admin')->middleware('auth')->middleware('lock')->group(function (
   Route::post('user/{id}/permissions/{permission}/revoke', 'UsersController@revoke')->name('user_permissions_revoke');
   Route::post('user/{id}/permissions/{permission}/grant', 'UsersController@grant')->name('user_permissions_grant');
 
-
-
-
-
 });
 
   Route::get('/image/external', 'UtilController@image')->name('image');
   Route::get('delivery-order/{id}/start-delivery', 'DeliveryOrderController@start')->name('start_delivery');
+
+  Route::get('delivery-order/{id}/delivery-status', 'DeliveryOrderController@status')->name('delivery_status');
 
   Route::get('lockscreen', 'LockAccountController@lockscreen')->name('lockscreen');
   Route::post('lockscreen', 'LockAccountController@unlock')->name('post_lockscreen');
