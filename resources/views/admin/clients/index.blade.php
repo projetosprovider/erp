@@ -38,6 +38,8 @@
         <h6 class="font-13 m-t-0 m-b-30">Listagem (<small class="text-navy">Registros retornados: {{ $quantity }}</small>)</h6>
 
         @if($clients->isNotEmpty())
+          <div class="table-responsive">
+
             <table class="table table-hover">
                 <thead>
 
@@ -108,7 +110,7 @@
             <div class="text-center">
             {{ $clients->links() }}
             </div>
-
+          </div>
         @else
 
             <div class="widget white-bg no-padding">

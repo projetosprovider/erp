@@ -104,7 +104,7 @@
 
         @endforelse
 
-        <div class="col-md-12 p-m text-center">
+        <div class="col-md-12 p-m text-center table-responsive">
           {{ $people->links() }}
         </div>
 

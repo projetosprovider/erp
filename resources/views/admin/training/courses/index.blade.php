@@ -22,6 +22,8 @@
         <h6 class="font-13 m-t-0 m-b-30">Listagem</h6>
 
         @if($courses->isNotEmpty())
+
+        <div class="table-responsive">
             <table class="table table-hover">
 
                 <thead>
@@ -74,7 +76,11 @@
                 </tbody>
             </table>
 
+            <div class="text-center">
             {{ $courses->links() }}
+            </div>
+
+        </div>
 
         @else
 

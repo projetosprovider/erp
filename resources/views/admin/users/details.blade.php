@@ -115,9 +115,11 @@
                             </div>
                             <div class="panel-body">
 
+                              @if($person->user->authentications->isNotEmpty())
+
                               <div class="timeline timeline-left">
 
-                                  @forelse($person->user->authentications as $login)
+                                  @foreach($person->user->authentications as $login)
 
                                   <article class="timeline-item">
                                       <div class="timeline-desk">
@@ -133,13 +135,23 @@
                                       </div>
                                   </article>
 
-                                  @empty
-                                      <div class="alert alert-warning">
-                                          Voce não possui nenhum log até o momento>.
-                                      </div>
-                                  @endforelse
+                                  @endforeach
 
                               </div>
+
+                              @else
+
+                                  <div class="widget white-bg no-padding">
+                                      <div class="p-m text-center">
+                                          <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
+                                          <br/>
+                                          <h4 class="font-bold no-margins">
+                                              Nenhum registro de login encontrado.
+                                          </h4>
+                                      </div>
+                                  </div>
+
+                              @endif
 
                             </div>
                         </div>
@@ -154,9 +166,11 @@
                             </div>
                             <div class="panel-body">
 
+                              @if($activities->isNotEmpty())
+
                               <div class="timeline timeline-left">
 
-                                  @forelse($activities as $activity)
+                                  @foreach($activities as $activity)
 
                                   <article class="timeline-item">
                                       <div class="timeline-desk">
@@ -173,13 +187,22 @@
                                       </div>
                                   </article>
 
-                                  @empty
-                                      <div class="alert alert-warning">
-                                          Voce não possui nenhum log até o momento>.
-                                      </div>
-                                  @endforelse
+                                  @endforeach
 
                               </div>
+
+                              @else
+                                  <div class="widget white-bg no-padding">
+                                      <div class="p-m text-center">
+                                          <h1 class="m-md"><i class="fas fa-history fa-2x"></i></h1>
+                                          <br/>
+                                          <h4 class="font-bold no-margins">
+                                              Nenhuma atividade encontrada.
+                                          </h4>
+                                      </div>
+                                  </div>
+
+                              @endif
 
                             </div>
                         </div>
