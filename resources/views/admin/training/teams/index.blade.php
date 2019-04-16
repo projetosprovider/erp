@@ -1,4 +1,6 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', 'Turmas')
 
 @push('stylesheets')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
@@ -49,7 +51,7 @@
           <div class="col-lg-4">
 
               <div class="ibox">
-                
+
                   <div class="ibox-title">
                       <h5>Listagem</h5>
                   </div>
