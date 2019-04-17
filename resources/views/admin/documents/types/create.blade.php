@@ -29,7 +29,7 @@
               <div class="form-group {!! $errors->has('price') ? 'has-error' : '' !!}">
                   <label class="col-form-label">Valor Cobrado (R$)</label>
                   <div class="input-group">
-                    <input type="text" name="price" value="{{ old('price') }}" class="form-control inputMoney"/>
+                    <input type="text" name="price" value="{{ old('price') }}" class="form-control inputMoney" required/>
                   </div>
                   {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
               </div>

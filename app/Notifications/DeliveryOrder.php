@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 
-class DeliveryOrder extends Notification
+class DeliveryOrder extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -35,7 +36,7 @@ class DeliveryOrder extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'slack'];
     }
 
     /**
@@ -49,14 +50,19 @@ class DeliveryOrder extends Notification
         return (new MailMessage)
                     ->greeting('Olá!')
                     ->subject($this->subject)
-                    ->line('The introduction to the notification.')
-                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid))
-                    ->line('Thank you for using our application!');
+                    ->line('O seu documento esta prestes a ser entregue.')
+                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid));
     }
 
     public function toDatabase()
     {
 
+    }
+
+    public function toSlack($notifiable)
+    {
+        return (new SlackMessage)
+                    ->content('One of your invoices has been paid!');
     }
 
     /**

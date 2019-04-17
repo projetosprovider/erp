@@ -15,6 +15,7 @@ use Notification;
 use Auth;
 use PDF;
 use Mail;
+use App\User;
 
 class DeliveryOrderController extends Controller
 {
@@ -64,9 +65,19 @@ class DeliveryOrderController extends Controller
 
             $message = 'Ordem de Entrega nº: '. str_pad($delivery->id, 6, "0", STR_PAD_LEFT) .' está em Transito.';
 
+            $client = $delivery->client;
+
+            $users = User::where('id', 1)->get();
+/*
+            Notification::send($users, new DeliveryOrderNotification($delivery, 'Ordem de Entrega', $message));
+
+            Mail::to([$client->name => $client->email])
+            ->queue(new DeliveryOrderMail($delivery, 'Ordem de Entrega', $message));
+*/
+
             $job = dispatch(new DeliveryOrderJob($delivery, 'Ordem de Entrega', $message));
 
-            dd($job);
+            //dd($job);
 
             return response($message, 200);
 

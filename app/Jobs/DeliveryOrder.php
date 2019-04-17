@@ -45,17 +45,15 @@ class DeliveryOrder implements ShouldQueue
 
         $users = User::where('id', 1)->get();
 
-        Notification::send($users, new DeliveryOrderNotification($this->delivery, $this->subject, $this->message));
-
-        Mail::to([$client->name => $client->email])
-        ->queue(new DeliveryOrderMail($this->delivery, $this->subject, $this->message));
-
         try {
 
+          Notification::send($users, new DeliveryOrderNotification($this->delivery, $this->subject, $this->message));
 
+          Mail::to([$client->name => $client->email])
+          ->queue(new DeliveryOrderMail($this->delivery, $this->subject, $this->message));
 
         } catch(\Exception $exception) {
-
+            throw $exception;
         }
     }
 }
