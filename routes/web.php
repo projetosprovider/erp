@@ -113,6 +113,8 @@ Route::prefix('admin')->middleware('auth')->middleware('lock')->group(function (
   Route::resource('delivery-order', 'DeliveryOrderController');
 
   Route::get('delivery-order/{id}/print/tags', 'DeliveryOrderController@printTags')->name('print_tags');
+  Route::get('delivery-order/document/{id}/status', 'DeliveryOrderController@statsByDocument')->name('delivery_status_by_document');
+
 
   Route::resource('message-board', 'MessageBoardController');
   Route::resource('message-types', 'MessageTypesController');

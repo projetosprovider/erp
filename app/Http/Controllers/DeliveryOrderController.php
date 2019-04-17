@@ -105,6 +105,11 @@ class DeliveryOrderController extends Controller
 
     }
 
+    public function statsByDocument($id, Request $request)
+    {
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
