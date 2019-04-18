@@ -22,6 +22,7 @@
         "laravel/slack-notification-channel": "^2.0",
         "laravel/tinker": "^1.0",
         "laravolt/avatar": "^2.2",
+        "pusher/pusher-php-server": "^3.4",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.4",
         "yadahan/laravel-authentication-log": "^1.1"

@@ -222,6 +222,8 @@ class UserTableSeeder extends Seeder
 
               $name = $uName;
 
+              echo 'creating user '. $name . PHP_EOL;
+
               $avatar = \Avatar::create($name)->toBase64();
 
               $person = People::create([

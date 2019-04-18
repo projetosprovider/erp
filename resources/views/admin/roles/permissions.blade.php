@@ -1,85 +1,85 @@
-@extends('layouts.layout')
+@extends('layouts.app')
+
+@section('page-title', $role->name . ' Permissões')
 
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-12">
-            <h2>Regras de Acesso </h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li>
-                    <a href="{{ route('roles.index') }}">Regras de Acesso</a>
-                </li>
-                <li class="active">
-                    <strong>Permissões</strong>
-                </li>
-            </ol>
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Listagem de Permissões</h6>
+
+        <div class="panel-group" id="accordion">
+
+          @foreach($modules as $key => $module)
+
+              @if($module->children->isNotEmpty())
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
+                        </h5>
+                    </div>
+                    <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
+                        <div class="panel-body">
+
+                          @forelse($module->children as $item)
+
+                          <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                            <h2>
+                                {{$item->name}}
+                            </h2>
+                          </div>
+
+                          <div class="table-responsive">
+                          <table class="table table-borderd">
+                              <tbody>
+                              @foreach($item->permissions as $permission)
+
+                              @php
+
+                                  $hasPermission = \App\Models\RoleDefaultPermissions::where('role_id', $role->id)
+                                  ->where('permission_id', $permission->id)
+                                  ->get()->first();
+
+                              @endphp
+
+                              <tr>
+                                  <td class="project-actions">
+
+                                      <input type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                        data-route-grant="{{route('role_permissions_grant', [$role->id, $permission->id])}}"
+                                        data-route-revoke="{{route('role_permissions_revoke', [$role->id, $permission->id])}}"
+                                        data-plugin="switchery" value="1"/>
+
+                                  </td>
+                                  <td class="project-title">
+                                      <p>Nome:</p>
+                                      <a href="#">{{$permission->name}}</a>
+                                  </td>
+                                  <td class="project-title">
+                                      <p>Descrição:</p>
+                                      <a href="#">{{$permission->description}}</a>
+                                  </td>
+
+                              </tr>
+                              @endforeach
+                              </tbody>
+                          </table>
+                          </div>
+                          @empty
+                              <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                          @endforelse
+
+                        </div>
+                    </div>
+                </div>
+
+              @endif
+
+          @endforeach
+
         </div>
 
     </div>
-
-
-    <div class="row">
-            <div class="col-lg-12">
-                <div class="wrapper wrapper-content animated fadeInUp">
-
-                @include('flash::message')
-
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Regras de Acesso</h5>
-                        <div class="ibox-tools">
-
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-
-                        <div class="project-list">
-
-                            @if($permissions->isNotEmpty())
-                            <table class="table table-hover">
-                                <tbody>
-                                @foreach($permissions as $permission)
-
-                                @php
-                                    $hasPermission = $role->detachPermission($permission);
-                                @endphp
-
-                                <tr>
-                                    <td class="project-title">
-                                        <p>#:</p>
-                                        <a href="#">{{$hasPermission ? 'SIM' : 'NÃO'}}</a>
-                                    </td>
-                                    <td class="project-title">
-                                        <p>Nome:</p>
-                                        <a href="#">{{$permission->name}}</a>
-                                    </td>
-                                    <td class="project-title">
-                                        <p>Descrição:</p>
-                                        <a href="#">{{$permission->description}}</a>
-                                    </td>
-                                    <td class="project-actions">
-                                      @if($hasPermission)
-                                        <a data-route="{{route('permissions.destroy', ['id' => $permission->id])}}" class="btn btn-danger btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
-                                      @else
-                                        <a data-route="{{route('permissions.destroy', ['id' => $permission->id])}}" class="btn btn-primary"><i class="fa fa-check"></i> Conceder Permissão</a>
-                                      @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            @else
-                                <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-            </div>
-        </div>
 
 @endsection

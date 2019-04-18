@@ -6,26 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Messages\SlackMessage;
+use App\User;
 
-class DeliveryOrder extends Notification implements ShouldQueue
+class NewUser extends Notification
 {
     use Queueable;
 
-    private $subject;
-    private $deliverOrder;
-    private $message;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($deliverOrder, $subject, $message)
+    public function __construct(User $user)
     {
-        $this->deliverOrder = $deliverOrder;
-        $this->subject = $subject;
-        $this->message = $message;
+        $this->user = $user;
     }
 
     /**
@@ -36,7 +32,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database', 'slack'];
+        return ['database'];
     }
 
     /**
@@ -49,20 +45,9 @@ class DeliveryOrder extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->greeting('Olá!')
-                    ->subject($this->subject)
-                    ->line('O seu documento esta prestes a ser entregue.')
-                    ->action('Acompanhar Entrega', route('delivery_status', $this->deliverOrder->uuid));
-    }
-
-    public function toDatabase()
-    {
-
-    }
-
-    public function toSlack($notifiable)
-    {
-        return (new SlackMessage)
-                    ->content('One of your invoices has been paid!');
+                    ->subject('Novo Usuário Adicionado')
+                    ->line($this->user->person->name . ' foi adionado á aplicação.')
+                    ->action('Acessar', route('home'));
     }
 
     /**
@@ -75,7 +60,7 @@ class DeliveryOrder extends Notification implements ShouldQueue
     {
         return [
           'notification_id' => $notifiable->id,
-          'mensagem' => 'Documento esta a caminho do destino.'
+          'mensagem' => 'Novo usuário adicionado.'
         ];
     }
 }

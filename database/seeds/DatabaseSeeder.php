@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OccupationTableSeeder::class);
         // Role comes before User seeder here.
         $this->call(PermissionsTableSeeder::class);
-        //$this->call(RolesTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
         // User seeder will use the roles above created.
         $this->call(UserTableSeeder::class);
 
@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MapperStatusTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
+
+        $this->call(MessageTypesTableSeeder::class);
+        $this->call(DocumentTypesTableSeeder::class);
 
         Model::reguard();
     }

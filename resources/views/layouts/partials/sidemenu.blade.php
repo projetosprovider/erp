@@ -18,18 +18,18 @@
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
             <li class="dropdown notification-list">
-              <!--
+
                 <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
                     <i class="mdi mdi-bell noti-icon"></i>
-                    <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
+                    <span class="badge badge-danger badge-pill noti-icon-badge"></span>
                 </a>
-              -->
+
                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
 
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h6 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Clear All</small></a> </span>Notification</h6>
+                        <h6 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Limpar todos</small></a> </span>Notificações</h6>
                     </div>
 
                     <div class="slimscroll" style="max-height: 190px;">
@@ -216,7 +216,7 @@
                     @permission('view.documentos')
 
                       <li>
-                          <a href="{{route('documents.index')}}" ><i class="fa fa-file-o"></i> <span class="nav-label">Documentos</span> </a>
+                          <a href="{{route('documents.index')}}" > <span class="nav-label">Documentos</span> </a>
                       </li>
 
                     @endpermission
@@ -224,10 +224,14 @@
                     @permission('view.ordem.entrega')
 
                       <li>
-                          <a href="{{route('delivery-order.index')}}" ><i class="fa fa-archive"></i> <span class="nav-label">Entregas</span> </a>
+                          <a href="{{route('delivery-order.index')}}" ><span class="nav-label">Entregas</span> </a>
                       </li>
 
                     @endpermission
+
+                    <li>
+                        <a href="{{route('types.index')}}"><span class="nav-label">Tipos de Documentos</span></a>
+                    </li>
 
                   </ul>
               </li>
@@ -283,9 +287,13 @@
                     </li>
                     @endpermission
 
+                    @permission('view.privilegios')
                     <li>
-                        <a href="{{route('types.index')}}"><span class="nav-label">Tipos de Documentos</span></a>
+                        <a href="{{route('roles.index')}}" ><span class="nav-label">Privilégios</span></a>
                     </li>
+                    @endpermission
+
+
 
                   </ul>
               </li>

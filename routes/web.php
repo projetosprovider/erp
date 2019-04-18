@@ -17,6 +17,11 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('lock');
 
+Route::get('test', function () {
+    event(new App\Events\NewUser(\App\User::find(1)));
+    return "Event has been sent!";
+});
+
 Route::get('/home', function() {
   return redirect()->route('home');
 })->middleware('lock');
@@ -159,6 +164,9 @@ Route::prefix('admin')->middleware('auth')->middleware('lock')->group(function (
 
   Route::post('user/{id}/permissions/{permission}/revoke', 'UsersController@revoke')->name('user_permissions_revoke');
   Route::post('user/{id}/permissions/{permission}/grant', 'UsersController@grant')->name('user_permissions_grant');
+
+  Route::post('role/{id}/permissions/{permission}/revoke', 'RolesController@revoke')->name('role_permissions_revoke');
+  Route::post('role/{id}/permissions/{permission}/grant', 'RolesController@grant')->name('role_permissions_grant');
 
 });
 

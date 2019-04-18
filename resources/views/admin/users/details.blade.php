@@ -129,8 +129,8 @@
                                               <div class="timeline-box">
                                                   <span class="arrow"></span>
                                                   <span class="timeline-icon {{ array_random(['', 'bg-success', 'bg-primary', 'bg-danger']) }}"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                                  <h4 class="timeline-date">{{ \App\Helpers\TimesAgo::render($login->login_at) }}</h4>
-                                                  <p class="timeline-date text-muted">Logou em: {{ $login->login_at->format('d/m/Y H:i:s') }}</p>
+                                                  <h4 class="timeline-date">{{ \App\Helpers\TimesAgo::render($login->login_at) ?? '' }}</h4>
+                                                  <p class="timeline-date text-muted">Logou em: {{ $login->login_at ? $login->login_at->format('d/m/Y H:i:s') : '' }}</p>
                                                   <p class="timeline-date text-muted">Tempo de sessão: {{ \App\Helpers\TimesAgo::diffBetween($login->login_at, $login->logout_at) }}</p>
                                               </div>
                                           </div>
@@ -426,6 +426,10 @@
                             </div>
                             <div class="panel-body">
 
+                              @if(auth()->user()->id == $user->id)
+                                <div class="alert alert-warning">Não é possível que você altere as suas permissões.</div>
+                              @endif
+
                               <div class="panel-group" id="accordion">
 
                                 @foreach($modules as $key => $module)
@@ -458,9 +462,11 @@
                                                     @endphp
 
                                                     <tr>
-                                                        <td class="project-title">
-                                                            <p>Acesso:</p>
-                                                            <a href="#">{{$hasPermission ? 'SIM' : 'NÃO'}}</a>
+                                                        <td class="project-actions">
+                                                            <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
+                                                              data-plugin="switchery" value="1"/>
                                                         </td>
                                                         <td class="project-title">
                                                             <p>Nome:</p>
@@ -469,14 +475,6 @@
                                                         <td class="project-title">
                                                             <p>Descrição:</p>
                                                             <a href="#">{{$permission->description}}</a>
-                                                        </td>
-                                                        <td class="project-actions">
-
-                                                            <input type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
-                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
-                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
-                                                              data-plugin="switchery" value="1"/>
-
                                                         </td>
                                                     </tr>
                                                     @endforeach

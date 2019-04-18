@@ -4,6 +4,7 @@ use App\User;
 use Illuminate\Database\Seeder;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Models\RoleDefaultPermissions;
 
 class RolesTableSeeder extends Seeder
 {
@@ -20,30 +21,38 @@ class RolesTableSeeder extends Seeder
          */
         if (Role::where('name', '=', 'Administrador')->first() === null) {
             $adminRole = Role::create([
-                'name'        => 'Administrador',
+                'name'        => 'Admin',
                 'slug'        => 'admin',
-                'description' => 'Administrador',
+                'description' => 'Admin',
                 'level'       => 5,
             ]);
 
             //$adminRole->syncPermissions(Permission::pluck('id'));
-        }
 
-        if (Role::where('name', '=', 'Gerente')->first() === null) {
-            $adminRole = Role::create([
-                'name'        => 'Gerente',
-                'slug'        => 'manager',
-                'description' => 'Acesso Gerente',
-                'level'       => 3,
-            ]);
+            foreach (Permission::all() as $key => $permission) {
+                RoleDefaultPermissions::create([
+                  'role_id' => $adminRole->id,
+                  'permission_id' => $permission->id
+                ]);
+            }
+
         }
 
         if (Role::where('name', '=', 'Usuario')->first() === null) {
             $userRole = Role::create([
-                'name'        => 'Usuario',
-                'slug'        => 'user',
-                'description' => 'Acesso de Usuario',
+                'name'        => 'User',
+                'slug'        => 'User',
+                'description' => 'Acesso de User',
                 'level'       => 1,
+            ]);
+        }
+
+        if (Role::where('name', '=', 'Unverified')->first() === null) {
+            $userRole = Role::create([
+                'name'        => 'Unverified',
+                'slug'        => 'Unverified',
+                'description' => 'Acesso de Unverified',
+                'level'       => 0,
             ]);
         }
 

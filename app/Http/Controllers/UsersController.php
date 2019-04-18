@@ -6,15 +6,16 @@ use App\User;
 use App\Models\TaskLogs;
 use App\Models\Task;
 use Illuminate\Http\Request;
-use Request as Req;
 use Illuminate\Validation\Validator;
-use Auth;
+use Auth, Notification;
+
 use App\Models\People;
 
-use App\Models\{Department,Module};
+use App\Models\{Department,Module, RoleDefaultPermissions};
 use App\Models\Department\Occupation;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use App\Notifications\NewUser as NewUserNotification;
 
 class UsersController extends Controller
 {
@@ -77,10 +78,6 @@ class UsersController extends Controller
           });
 
         }
-
-
-
-        //dd($people->get());
 
         $people = $people->paginate();
 
@@ -311,14 +308,12 @@ class UsersController extends Controller
         $user->save();
         $user->roles()->attach($roleUser);
 
-        if($roleUser->id == 1) {
-            $user->syncPermissions($permissions);
-        }
+        $permissionForRole = RoleDefaultPermissions::where('role_id', $roleUser->id)
+        ->pluck('permission_id');
+
+        $user->syncPermissions($permissionForRole);
 
         $user->save();
-
-        //$permissions = Permission::pluck('id');
-        //$user->syncPermissions($permissions);
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo usuário adicionado com sucesso.'
@@ -353,6 +348,8 @@ class UsersController extends Controller
 
         $permissions = Permission::all();
         $modules = Module::all();
+
+        Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
 
         return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person', 'modules'))
         ->with('user', $user)
