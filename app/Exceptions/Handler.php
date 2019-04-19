@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +49,51 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $userLevelCheck = $exception instanceof \jeremykenedy\LaravelRoles\Exceptions\RoleDeniedException ||
+              $exception instanceof \jeremykenedy\LaravelRoles\Exceptions\RoleDeniedException ||
+              $exception instanceof \jeremykenedy\LaravelRoles\Exceptions\PermissionDeniedException ||
+              $exception instanceof \jeremykenedy\LaravelRoles\Exceptions\LevelDeniedException;
+
+          if ($userLevelCheck) {
+
+              if ($request->expectsJson()) {
+                  return Response::json(array(
+                      'error'    =>  403,
+                      'message'   =>  'Unauthorized.'
+                  ), 403);
+              }
+
+              abort(403);
+          }
+
+        if($exception instanceof ModelNotFoundException) {
+
+            $error['code'] = 500;
+            $error['message'] = 'Erro interno no servidor.';
+
+            return response()->view('errors.custom', $error, $error['code']);
+        }
+
+        if($exception instanceof HttpException && $exception->getStatusCode() == 403) {
+
+            $error = [
+              'code' => 403,
+              'message' => 'Você NÃO tem permissão para acessar esta área do sitema!.'
+            ];
+
+            return response()->view('errors.custom', $error, $error['code']);
+        }
+
+        if($exception instanceof NotFoundHttpException) {
+
+            $error = [
+              'code' => 404,
+              'message' => 'Página não encontrada.'
+            ];
+
+            return response()->view('errors.custom', $error, $error['code']);
+        }
+
         return parent::render($request, $exception);
     }
 }

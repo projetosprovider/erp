@@ -15,7 +15,11 @@ class NewUser implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $username;
+
+    public $message;
+
+    public $time;
 
     /**
      * Create a new event instance.
@@ -24,7 +28,13 @@ class NewUser implements ShouldBroadcast
      */
     public function __construct(User $user)
     {
-        $this->user = $user;
+        $this->username = $user->person->name;
+
+        $this->message = $this->username . " foi adicionado a aplicação";
+
+        $this->date = $user->created_at->format('d/m/Y H:i:s');
+
+        $this->time = $user->created_at->diffForHumans();
     }
 
     /**

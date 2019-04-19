@@ -23,7 +23,7 @@ class User extends Authenticatable
     use HasRoleAndPermission;
 
     use Uuids;
-    use LogsActivity;
+    //use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -52,7 +52,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static $logAttributes = ['name', 'email', 'password', 'login_soc', 'password_soc', 'id_soc'];
+    //protected static $logAttributes = ['name', 'email', 'password', 'login_soc', 'password_soc', 'id_soc'];
+
+    public function messages()
+    {
+      return $this->hasMany('App\Models\Message');
+    }
 
     public function activities()
     {
@@ -79,7 +84,7 @@ class User extends Authenticatable
         return $this->hasMany(TaskLogs::class);
     }
 
-    public function messages()
+    public function messageBoard()
     {
         return $this->hasMany('App\Models\MessageBoard\User');
     }
@@ -120,7 +125,7 @@ class User extends Authenticatable
     {
         return $this->hasRole('Admin');
     }
-
+/*
     public function getDescriptionForEvent(string $eventName): string
     {
         if($eventName == 'updated') {
@@ -131,7 +136,7 @@ class User extends Authenticatable
 
         return "Usuário Adicionado";
     }
-
+*/
     /**
      * @return bool
      */

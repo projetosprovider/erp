@@ -349,7 +349,7 @@ class UsersController extends Controller
         $permissions = Permission::all();
         $modules = Module::all();
 
-        Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
+        //Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
 
         return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person', 'modules'))
         ->with('user', $user)

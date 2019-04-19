@@ -41,12 +41,21 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 
+    @yield('css')
+
     <script src="{{ asset('simple/js/modernizr.min.js') }}"></script>
+
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
 
 </head>
 <body>
     <!-- Begin page -->
     <div id="wrapper">
+      <div id="app" :user="{{ \Auth::user() }}">
 
         @include('layouts.partials.sidemenu')
 
@@ -70,6 +79,8 @@
 
                               @yield('content')
 
+
+
                             </div>
                         </div>
                     </div>
@@ -79,7 +90,10 @@
 
                 <div class="footer">
                     <div class="pull-right hide-phone">
-                        Project Completed <strong class="text-custom">57%</strong>.
+                      logou em:  <strong class="text-custom">{{ \Auth::user()->lastLoginAt() ? \Auth::user()->lastLoginAt()->format('d/m/Y H:i') : '-' }}</strong>.
+                      @if(\Auth::user()->lastLoginAt())
+                          {{ \App\Helpers\TimesAgo::render(\Auth::user()->lastLoginAt()) ?? '' }}  
+                      @endif
                     </div>
                     <div>
                         <strong>Provider Saúde e Segurança do Trabalho</strong> - Direitos Reservados © {{ now()->format('Y') }}
@@ -95,7 +109,7 @@
         <!-- End Right content here -->
         <!-- ============================================================== -->
 
-
+      </div>
     </div>
     <!-- END wrapper -->
 
@@ -104,6 +118,8 @@
 
     <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="{{ asset('simple/js/popper.min.js') }}"></script>
     <script src="{{ asset('simple/js/bootstrap.min.js') }}"></script>
@@ -145,62 +161,6 @@
 
     <script>
 
-    var notificationsWrapper   = $('.notification-list');
-    var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
-    var notificationsCountElem = notificationsToggle.find('i[data-count]');
-    var notificationsCount     = parseInt(notificationsCountElem.data('count'));
-    var notifications          = notificationsWrapper.find('ul.dropdown-menu');
-
-    if (notificationsCount <= 0) {
-      notificationsWrapper.hide();
-    }
-
-    // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
-
-    var pusher = new Pusher('fbc40aa0ff741e4532da', {
-      encrypted: true,
-      cluster: 'mt1',
-    });
-
-    // Subscribe to the channel we specified in our Laravel Event
-    var channel = pusher.subscribe('new-user');
-
-    // Bind a function to a Event (the full Laravel class)
-    channel.bind('App\\Events\\NewUser', function(data) {
-      console.log(data);
-      var existingNotifications = notifications.html();
-      var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
-      var newNotificationHtml = `
-        <li class="notification active">
-            <div class="media">
-              <div class="media-left">
-                <div class="media-object">
-                  <img src="https://api.adorable.io/avatars/71/`+avatar+`.png" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
-                </div>
-              </div>
-              <div class="media-body">
-                <strong class="notification-title">`+data.message+`</strong>
-                <!--p class="notification-desc">Extra description can go here</p-->
-                <div class="notification-meta">
-                  <small class="timestamp">about a minute ago</small>
-                </div>
-              </div>
-            </div>
-        </li>
-      `;
-      notifications.html(newNotificationHtml + existingNotifications);
-
-      notificationsCount += 1;
-      notificationsCountElem.attr('data-count', notificationsCount);
-      notificationsWrapper.find('.notif-count').text(notificationsCount);
-      notificationsWrapper.show();
-    });
-
-    </script>
-
-    <script>
-
   		$(document).ready(function() {
 
   			$('.select2').select2({
@@ -223,6 +183,48 @@
           buttonName: "btn btn-custom",
           'placeholder': 'Escola um ou mais arquivos'
         });
+
+        var notificationsWrapper   = $('.notification-list');
+        var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+        var notificationsCountElem = notificationsToggle.find('.noti-icon-badge');
+        var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+        var notifications          = notificationsWrapper.find('.slimscroll');
+
+        if (notificationsCount <= 0) {
+          //notificationsWrapper.hide();
+        }
+
+        // Enable pusher logging - don't include this in production
+        // Pusher.logToConsole = true;
+
+        var pusher = new Pusher('fbc40aa0ff741e4532da', {
+          encrypted: true,
+          cluster: 'mt1',
+        });
+
+        // Subscribe to the channel we specified in our Laravel Event
+        var channel = pusher.subscribe('new-user');
+
+        // Bind a function to a Event (the full Laravel class)
+        channel.bind('App\\Events\\NewUser', function(data) {
+          console.log(data);
+          var existingNotifications = notifications.html();
+          var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+          var newNotificationHtml = `
+            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <div class="notify-icon bg-success"><i class="mdi mdi-account-plus"></i></div>
+                <p class="notify-details">`+data.message+`<small class="text-muted">`+data.time+`</small></p>
+            </a>
+          `;
+          notifications.html(newNotificationHtml + existingNotifications);
+
+          notificationsCount += 1;
+          notificationsCountElem.attr('data-count', notificationsCount);
+          notificationsWrapper.find('.notif-count').text(notificationsCount);
+          notificationsWrapper.show();
+        });
+
+
 
   		});
 

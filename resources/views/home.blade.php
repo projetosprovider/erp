@@ -6,7 +6,7 @@
 
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-lg-8 col-md-12">
         <div class="card-box">
             <h6 class="font-13 m-t-0 m-b-30">Mural de Recados</h6>
 
@@ -55,7 +55,7 @@
         </div>
     </div> <!-- end col -->
 
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-12">
         <div class="card-box">
             <h6 class="font-13 m-t-0 m-b-30">Atividades recentes</h6>
 

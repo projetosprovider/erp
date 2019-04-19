@@ -15,6 +15,11 @@
 
     <nav class="navbar-custom">
 
+        @php
+            $user = auth()->user();
+            $totalNotifications = $user->unreadNotifications->count();
+        @endphp
+
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
             <li class="dropdown notification-list">
@@ -22,51 +27,51 @@
                 <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
                     <i class="mdi mdi-bell noti-icon"></i>
-                    <span class="badge badge-danger badge-pill noti-icon-badge"></span>
+                    <span class="badge badge-danger badge-pill noti-icon-badge notif-count" data-count="{{ $totalNotifications }}">{{ $totalNotifications }}</span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right dropdown-lg">
 
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h6 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Limpar todos</small></a> </span>Notificações</h6>
+                        <h6 class="m-0"><span class="float-right"><a href="{{ route('notifications_markasread') }}" class="text-dark"><small>Limpar todos</small></a> </span>Notificações</h6>
                     </div>
 
-                    <div class="slimscroll" style="max-height: 190px;">
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-success"><i class="mdi mdi-comment-account-outline"></i></div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">1 min ago</small></p>
-                        </a>
+                    <div class="slimscroll" style="min-height: 190px;max-height: 190px;">
 
-                        <!-- item-->
+                        @foreach($user->unreadNotifications as $notification)
+                          <a href="{{ route('notifications.show', $notification->id) }}" class="dropdown-item notify-item">
+                              <div class="notify-icon bg-success"><i class="mdi mdi-comment-account-outline"></i></div>
+                              <p class="notify-details">{{ $notification['data']['message'] }}<small class="text-muted">{{ \App\Helpers\TimesAgo::render($notification->created_at) }}</small></p>
+                          </a>
+                        @endforeach
+
+                        <!--
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-info"><i class="mdi mdi-account-plus"></i></div>
                             <p class="notify-details">New user registered.<small class="text-muted">5 hours ago</small></p>
                         </a>
 
-                        <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-danger"><i class="mdi mdi-heart"></i></div>
                             <p class="notify-details">Carlos Crouch liked <b>Admin</b><small class="text-muted">3 days ago</small></p>
                         </a>
 
-                        <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-warning"><i class="mdi mdi-comment-account-outline"></i></div>
                             <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">4 days ago</small></p>
                         </a>
 
-                        <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-custom"><i class="mdi mdi-heart"></i></div>
                             <p class="notify-details">Carlos Crouch liked <b>Admin</b><small class="text-muted">13 days ago</small></p>
                         </a>
+                        -->
                     </div>
 
                     <!-- All-->
-                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                        View all <i class="fi-arrow-right"></i>
+                    <a href="{{ route('notifications.index') }}" class="dropdown-item text-center text-primary notify-item notify-all">
+                        Ver Todas <i class="fi-arrow-right"></i>
                     </a>
 
                 </div>
@@ -152,6 +157,7 @@
         <div class="user-info">
             <a href="{{route('user')}}">{{ Auth()->user()->person->name }}</a>
             <p class="text-muted m-0">{{  Auth::user()->person->department->name ?? '' }}</p>
+            <userstatus :user="{{ Auth::user() }}"></userstatus>
         </div>
     </div>
 
@@ -299,6 +305,10 @@
               </li>
 
             @endpermission
+
+            <li>
+                <a href="{{route('chat')}}" ><i class="ti-comments"></i> <span class="nav-label">Chat</span> </a>
+            </li>
 
 
             <!--

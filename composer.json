@@ -25,6 +25,7 @@
         "pusher/pusher-php-server": "^3.4",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-activitylog": "^3.4",
+        "vinkla/pusher": "^4.2",
         "yadahan/laravel-authentication-log": "^1.1"
     },
     "require-dev": {

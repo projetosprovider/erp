@@ -59,8 +59,8 @@ class NewUser extends Notification
     public function toArray($notifiable)
     {
         return [
-          'notification_id' => $notifiable->id,
-          'mensagem' => 'Novo usuário adicionado.'
+          'message' => $this->user->person->name .' foi adicionado a aplicação',
+          'date' => $this->user->created_at,
         ];
     }
 }

@@ -62,7 +62,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="home-b1">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-12">
                         <!-- Personal-Information -->
                         <div class="panel panel-default panel-fill">
                             <div class="panel-heading">
@@ -160,7 +160,7 @@
                         <!-- Social -->
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8 col-md-12">
                         <!-- Personal-Information -->
                         <div class="panel panel-default panel-fill">
                             <div class="panel-heading">
@@ -217,7 +217,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8 col-md-12">
 
                         <div class="panel panel-default panel-fill">
                             <div class="panel-heading">
@@ -327,7 +327,7 @@
 
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-12">
 
                       <div class="panel panel-default panel-fill">
                           <div class="panel-heading">
@@ -420,82 +420,73 @@
 
                     <div class="col-md-12">
 
-                        <div class="panel panel-default panel-fill">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Editar Permissões</h3>
-                            </div>
-                            <div class="panel-body">
+                      @if(auth()->user()->id == $user->id)
+                        <div class="alert alert-warning">Não é possível que você altere as suas permissões.</div>
+                      @endif
 
-                              @if(auth()->user()->id == $user->id)
-                                <div class="alert alert-warning">Não é possível que você altere as suas permissões.</div>
-                              @endif
+                      <div class="panel-group" id="accordion">
 
-                              <div class="panel-group" id="accordion">
+                        @foreach($modules as $key => $module)
 
-                                @foreach($modules as $key => $module)
+                            @if($module->children->isNotEmpty())
 
-                                    @if($module->children->isNotEmpty())
+                              <div class="panel panel-default">
+                                  <div class="panel-heading">
+                                      <h5 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
+                                      </h5>
+                                  </div>
+                                  <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
+                                      <div class="panel-body">
 
-                                      <div class="panel panel-default">
-                                          <div class="panel-heading">
-                                              <h5 class="panel-title">
-                                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}" class="collapsed" aria-expanded="false">{{$module->name}}</a>
-                                              </h5>
-                                          </div>
-                                          <div id="collapse{{ $loop->index }}" class="panel-collapse {{ $key==0 ? 'in' : '' }} collapse" style="">
-                                              <div class="panel-body">
+                                        @forelse($module->children as $item)
 
-                                                @forelse($module->children as $item)
+                                        <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                                          <h5>
+                                              {{$item->name}}
+                                          </h5>
+                                        </div>
 
-                                                <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                                  <h2>
-                                                      {{$item->name}}
-                                                  </h2>
-                                                </div>
+                                        <table class="table table-borderd">
+                                            <tbody>
+                                            @foreach($item->permissions as $permission)
 
-                                                <table class="table table-borderd">
-                                                    <tbody>
-                                                    @foreach($item->permissions as $permission)
+                                            @php
+                                                $hasPermission = $user->hasPermission($permission->slug);
+                                            @endphp
 
-                                                    @php
-                                                        $hasPermission = $user->hasPermission($permission->slug);
-                                                    @endphp
+                                            <tr>
+                                                <td class="project-actions">
+                                                    <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
+                                                      data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
+                                                      data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
+                                                      data-plugin="switchery" value="1"/>
+                                                </td>
+                                                <td class="project-title">
+                                                    <p>Nome:</p>
+                                                    <a href="#">{{$permission->name}}</a>
+                                                </td>
+                                                <td class="project-title">
+                                                    <p>Descrição:</p>
+                                                    <a href="#">{{$permission->description}}</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                        @empty
+                                            <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
+                                        @endforelse
 
-                                                    <tr>
-                                                        <td class="project-actions">
-                                                            <input {{ auth()->user()->id == $user->id ? 'disabled' : '' }} type="checkbox" class="checkboxPermissions" {{ $hasPermission ? 'checked' : '' }}
-                                                              data-route-grant="{{route('user_permissions_grant', [$user->uuid, $permission->id])}}"
-                                                              data-route-revoke="{{route('user_permissions_revoke', [$user->uuid, $permission->id])}}"
-                                                              data-plugin="switchery" value="1"/>
-                                                        </td>
-                                                        <td class="project-title">
-                                                            <p>Nome:</p>
-                                                            <a href="#">{{$permission->name}}</a>
-                                                        </td>
-                                                        <td class="project-title">
-                                                            <p>Descrição:</p>
-                                                            <a href="#">{{$permission->description}}</a>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                                @empty
-                                                    <div class="alert alert-warning">Nenhum sub-processo registrado até o momento.</div>
-                                                @endforelse
-
-                                              </div>
-                                          </div>
                                       </div>
-
-                                    @endif
-
-                                @endforeach
-
+                                  </div>
                               </div>
 
-                            </div>
-                        </div>
+                            @endif
+
+                        @endforeach
+
+                      </div>
 
                     </div>
 
