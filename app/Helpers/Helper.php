@@ -110,9 +110,9 @@ class Helper
 
         if($model == 'App\Models\Client\Employee') {
 
-          if($item || $item->client !== null) {
-            $route = route('client_employees', $item->company->uuid);
-            $html = '<a href='.$route.'>'.$item->description.'</a>';
+          if($item) {
+            $route = route('clients.show', $item->company->uuid);
+            $html = '<a href='.$route.'>'.$item->name.'</a>';
           }
 
         }

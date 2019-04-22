@@ -27,7 +27,7 @@
                     <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                         <label class="col-form-label" for="phone">Telefone</label>
                         <div class="input-group">
-                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Informe o Telefone">
+                            <input type="text" id="phone" name="phone" class="form-control inputPhone" placeholder="Informe o Telefone">
 
                         </div>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}

@@ -172,11 +172,15 @@
                 </a>
             </li>
 
+            @permission('view.clientes')
+
             <li>
                 <a href="{{ route('clients.index') }}">
                     <i class="ti-user"></i> <span> Clientes </span>
                 </a>
             </li>
+
+            @endpermission
 
             @permission('view.treinamentos')
 

@@ -300,7 +300,7 @@ class UsersController extends Controller
 
         $user = new User();
         $user->email = $data['email'];
-        $user->nick = str_slug($data['name']);
+        $user->nick = str_slug($data['name'], '.');
         $user->password = bcrypt($data['password']);
         $user->person_id = $person->id;
         $user->avatar = $avatar;
@@ -314,6 +314,8 @@ class UsersController extends Controller
         $user->syncPermissions($permissionForRole);
 
         $user->save();
+
+        Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Novo usuário adicionado com sucesso.'
@@ -349,7 +351,7 @@ class UsersController extends Controller
         $permissions = Permission::all();
         $modules = Module::all();
 
-        //Notification::send(User::where('id', 1)->get(), new NewUserNotification($user));
+
 
         return view('admin.users.details', compact('occupations', 'departments', 'activities', 'roles', 'person', 'modules'))
         ->with('user', $user)
@@ -417,6 +419,8 @@ class UsersController extends Controller
             $user->avatar = $path;
             $user->avatar_type = 'upload';
         }
+
+        $user->active = $request->has('active');
 
         $user->save();
 

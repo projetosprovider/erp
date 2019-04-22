@@ -145,11 +145,10 @@ class EmployeesController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        //dd($data);
-
         $company = Client::uuid($data['company_id']);
         $data['company_id'] = $company->id;
         $data['active'] = $request->has('active');
+        $employee->update($data);
 
         notify()->flash('Sucesso!', 'success', [
           'text' => 'Funcionário atualizado com sucesso.'

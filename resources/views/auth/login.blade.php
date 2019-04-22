@@ -20,6 +20,12 @@
         <form class="form-horizontal" action="{{ route('login') }}" method="POST">
             @csrf
 
+            @foreach ($errors->all() as $error)
+
+                <div class="alert alert-danger">{{ $error }}</div>
+
+            @endforeach
+
             <div class="form-group m-b-20">
                 <div class="col-xs-12">
                     <label for="emailaddress">Email ou Login</label>

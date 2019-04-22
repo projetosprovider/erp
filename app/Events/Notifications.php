@@ -11,11 +11,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\User;
 
-class NewUser implements ShouldBroadcast
+class Notifications implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $username;
 
     public $message;
 
@@ -26,15 +24,10 @@ class NewUser implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $message)
     {
-        $this->username = $user->person->name;
-
-        $this->message = $this->username . " foi adicionado a aplicação";
-
-        $this->date = $user->created_at->format('d/m/Y H:i:s');
-
-        $this->time = $user->created_at->diffForHumans();
+        $this->message = $message;
+        $this->time = $user->created_at;
     }
 
     /**
@@ -44,6 +37,6 @@ class NewUser implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('new-user');
+        return new Channel('notifications');
     }
 }

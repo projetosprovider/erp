@@ -66,7 +66,7 @@
                         <div class="input-group">
                             <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="company_id" required>
                                   @foreach($companies as $companyItem)
-                                      <option value="{{$company->uuid}}" {{ $employee->company_id == $companyItem->uuid ? 'selected' : '' }}>{{$companyItem->name}}</option>
+                                      <option value="{{$companyItem->uuid}}" {{ $employee->company_id == $companyItem->id ? 'selected' : '' }}>{{$companyItem->name}}</option>
                                   @endforeach
                             </select>
                         </div>

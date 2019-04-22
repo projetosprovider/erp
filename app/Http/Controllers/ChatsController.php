@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
-use App\Events\MessageSent;
+use App\Events\{MessageSent, Notifications};
 use Auth;
 use App\User;
 use App\Models\People;
@@ -101,7 +101,10 @@ class ChatsController extends Controller
           'receiver_id' => $user->id
         ]);
 
+        $messageOnNotifications = Auth::user()->person->name . " te enviou uma mensagem.";
+
         broadcast(new MessageSent(Auth::user(), $message, $user))->toOthers();
+        broadcast(new Notifications($user, $messageOnNotifications))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }

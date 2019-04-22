@@ -282,7 +282,7 @@
                                           <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!}">
                                               <label class="col-form-label" for="active">Ativo</label>
                                               <div class="input-group">
-                                                  <input type="checkbox" id="active" name="active" {{ $user->active ? 'active' : '' }} data-plugin="switchery" checked value="{{ 1 }}">
+                                                  <input type="checkbox" id="active" name="active" {{ $user->active ? 'checked' : '' }} data-plugin="switchery" value="{{ 1 }}">
 
                                               </div>
                                               {!! $errors->first('active', '<p class="help-block">:message</p>') !!}

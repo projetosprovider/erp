@@ -92,7 +92,7 @@
                     <div class="pull-right hide-phone">
                       logou em:  <strong class="text-custom">{{ \Auth::user()->lastLoginAt() ? \Auth::user()->lastLoginAt()->format('d/m/Y H:i') : '-' }}</strong>.
                       @if(\Auth::user()->lastLoginAt())
-                          {{ \App\Helpers\TimesAgo::render(\Auth::user()->lastLoginAt()) ?? '' }}  
+                          {{ \App\Helpers\TimesAgo::render(\Auth::user()->lastLoginAt()) ?? '' }}
                       @endif
                     </div>
                     <div>
@@ -203,10 +203,10 @@
         });
 
         // Subscribe to the channel we specified in our Laravel Event
-        var channel = pusher.subscribe('new-user');
+        var channel = pusher.subscribe('notifications');
 
         // Bind a function to a Event (the full Laravel class)
-        channel.bind('App\\Events\\NewUser', function(data) {
+        channel.bind('App\\Events\\Notifications', function(data) {
           console.log(data);
           var existingNotifications = notifications.html();
           var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
