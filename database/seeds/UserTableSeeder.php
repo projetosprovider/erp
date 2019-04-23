@@ -68,22 +68,9 @@ class UserTableSeeder extends Seeder
 
         $users = "
             adinuza.lopes@provider-es.com.br,
-            administrativo.gerencia@provider-es.com.br,
-            administrativo3@provider-es.com.br,
-            administrativo@provider-es.com.br,
             aeliton.silva@provider-es.com.br,
-            aigline.pereira@provider-es.com.br,
-            alice.campos@provider-es.com.br,
-            aliny@provider-es.com.br,
-            anacarolina@provider-es.com.br,
             andre.tavares@provider-es.com.br,
-            ariane.pina@provider-es.com.br,
-            arquivo@provider-es.com.br,
-            vinycius.alves@provider-es.com.br,
-            vivianeamorim@provider-es.com.br,
-            vivyane.oliveira@provider-es.com.br,
-            wesley.damasio@provider-es.com.br,
-            weslley.lucio@provider-es.com.br";
+            vinycius.alves@provider-es.com.br, ";
 
         $users = explode(',', $users);
 

@@ -2,11 +2,6 @@
 
 @section('page-title', 'Cursos')
 
-@push('stylesheets')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.3/chosen.min.css">
-@endpush
-
 @section('content')
 
     <div class="card-box">

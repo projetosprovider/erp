@@ -2,120 +2,80 @@
 
 @section('page-title', 'Turmas')
 
-@push('stylesheets')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.3/chosen.min.css">
-@endpush
-
 @section('content')
 
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Turmas</h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('home') }}">Painel Principal</a>
-                </li>
-                <li class="active">
-                    <strong>Turmas</strong>
-                </li>
-            </ol>
-        </div>
+    <div class="card-box">
+        <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
 
-        <div class="col-lg-2">
-            @permission('create.clientes')
-                <a href="{{ route('courses.create') }}" class="btn btn-primary btn-block dim m-t-lg">Novo Curso</a>
-            @endpermission
-
-        </div>
+        @permission('create.clientes')
+            <a href="{{ route('courses.create') }}" class="btn btn-custom m-t-lg">Nova Turma</a>
+        @endpermission
 
     </div>
 
+    <div class="table-responsive">
+        @if($teams->isNotEmpty())
 
-    <div class="row">
-        <div class="wrapper wrapper-content animated fadeInRight">
+            <table class="table table-hover">
+                <tbody>
+                    @foreach($teams as $course)
+                        <tr>
+                            <td class="project-title">
+                                <p>ID:</p>
+                                <a>{{$course->id}}</a>
+                            </td>
 
-          <div class="col-lg-8">
+                            <td class="project-title">
+                                <p>Titulo:</p>
+                                <a>{{$course->title}}</a>
+                            </td>
 
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Calendário</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="calendar"></div>
+                            <td class="project-title">
+                                <p>Descrição:</p>
+                                <a>{{$course->description}}</a>
+                            </td>
+
+                            <td class="project-title">
+                                <p>Carga Horária:</p>
+                                <a>{{$course->workload}} horas</a>
+                            </td>
+
+                            <td class="project-title">
+                                <p>Adicionado em:</p>
+                                <a>{{$course->created_at->format('d/m/Y H:i')}}</a>
+                            </td>
+
+                            <td class="project-actions">
+                              @permission('edit.cursos')
+                                <a href="{{route('courses.edit', ['id' => $course->uuid])}}" class="btn btn-white btn-block"><i class="fa fa-pencil"></i> Editar</a>
+                              @endpermission
+
+                              @permission('delete.cursos')
+                                <a data-route="{{route('courses.destroy', ['id' => $course->uuid])}}" class="btn btn-danger btn-block btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
+                              @endpermission
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            {{ $courses->links() }}
+
+        @else
+          <div class="col-sm-12">
+
+            <div class="widget white-bg no-padding m-t-30">
+                <div class="p-m text-center">
+                    <h1 class="m-md"><i class="far fa-folder-open fa-3x"></i></h1>
+                    <h4 class="font-bold no-margins">
+                        Nenhum registro encontrado.
+                    </h4>
                 </div>
             </div>
 
           </div>
-
-          <div class="col-lg-4">
-
-              <div class="ibox">
-
-                  <div class="ibox-title">
-                      <h5>Listagem</h5>
-                  </div>
-                  <div class="ibox-content">
-
-                        <div class="project-list">
-                            @if($teams->isNotEmpty())
-                                <table class="table table-hover">
-                                    <tbody>
-                                        @foreach($teams as $course)
-                                            <tr>
-
-                                                <td class="project-title">
-                                                    <p>ID:</p>
-                                                    <a>{{$course->id}}</a>
-                                                </td>
-
-                                                <td class="project-title">
-                                                    <p>Titulo:</p>
-                                                    <a>{{$course->title}}</a>
-                                                </td>
-
-                                                <td class="project-title">
-                                                    <p>Descrição:</p>
-                                                    <a>{{$course->description}}</a>
-                                                </td>
-
-                                                <td class="project-title">
-                                                    <p>Carga Horária:</p>
-                                                    <a>{{$course->workload}} horas</a>
-                                                </td>
-
-                                                <td class="project-title">
-                                                    <p>Adicionado em:</p>
-                                                    <a>{{$course->created_at->format('d/m/Y H:i')}}</a>
-                                                </td>
-
-                                                <td class="project-actions">
-                                                  @permission('edit.cursos')
-                                                    <a href="{{route('courses.edit', ['id' => $course->uuid])}}" class="btn btn-white btn-block"><i class="fa fa-pencil"></i> Editar</a>
-                                                  @endpermission
-
-                                                  @permission('delete.cursos')
-                                                    <a data-route="{{route('courses.destroy', ['id' => $course->uuid])}}" class="btn btn-danger btn-block btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
-                                                  @endpermission
-                                                </td>
-
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-
-                                {{ $courses->links() }}
-
-                            @else
-                                <div class="alert alert-warning text-center">Nenhum cliente registrado até o momento.</div>
-                            @endif
-                        </div>
-
-                    </div>
-
-              </div>
-
-        </div>
+        @endif
     </div>
 
 @endsection

@@ -30,7 +30,7 @@ Route::get('/admin', function() {
   return redirect()->route('home');
 })->middleware('lock');
 
-Route::middleware('auth')->middleware('lock')->group(function () {
+Route::middleware('auth')->middleware('status')->middleware('lock')->group(function () {
 
   Route::get('/', 'HomeController@index')->name('home');
 
@@ -47,6 +47,8 @@ Route::middleware('auth')->middleware('lock')->group(function () {
       Route::post('conversation/{id}/messages', 'ChatsController@sendMessage')->name('chat_post_message');
 
     });
+
+    Route::resource('configurations', 'ConfigurationsController');
 
     # Tasks
     Route::get('tasks', 'TaskController@index')->name('tasks');

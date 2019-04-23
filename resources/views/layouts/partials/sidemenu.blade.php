@@ -191,7 +191,7 @@
                     @permission('view.cursos')
 
                       <li>
-                          <a href="{{route('courses.index')}}" ><i class="fa fa-book"></i> <span class="nav-label">Cursos</span> </a>
+                          <a href="{{route('courses.index')}}"><span class="nav-label">Cursos</span> </a>
                       </li>
 
                     @endpermission
@@ -199,7 +199,7 @@
                     @permission('view.turmas')
 
                       <li>
-                          <a href="{{route('teams.index')}}" ><i class="fa fa-users"></i> <span class="nav-label">Turmas</span> </a>
+                          <a href="{{route('teams.index')}}"><span class="nav-label">Turmas</span> </a>
                       </li>
 
                     @endpermission
@@ -207,7 +207,7 @@
                     @permission('view.agenda')
 
                       <li>
-                          <a href="{{route('teams.index')}}" ><i class="fa fa-calendar"></i> <span class="nav-label">Agenda</span> </a>
+                          <a href="{{route('teams.index')}}"><span class="nav-label">Agenda</span> </a>
                       </li>
 
                     @endpermission
@@ -300,6 +300,12 @@
                     @permission('view.privilegios')
                     <li>
                         <a href="{{route('roles.index')}}" ><span class="nav-label">Privilégios</span></a>
+                    </li>
+                    @endpermission
+
+                    @permission('view.privilegios')
+                    <li>
+                        <a href="{{route('configurations.index')}}" ><span class="nav-label">Configurações</span></a>
                     </li>
                     @endpermission
 

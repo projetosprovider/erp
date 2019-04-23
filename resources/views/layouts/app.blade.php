@@ -181,7 +181,7 @@
         $(".filestyle").filestyle({
           buttonText: "Escolher Arquivos",
           buttonName: "btn btn-custom",
-          'placeholder': 'Escola um ou mais arquivos'
+          placeholder: 'Escola um ou mais arquivos',
         });
 
         var notificationsWrapper   = $('.notification-list');
