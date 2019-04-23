@@ -30,7 +30,13 @@ Route::get('/admin', function() {
   return redirect()->route('home');
 })->middleware('lock');
 
-Route::middleware('auth')->middleware('status')->middleware('lock')->group(function () {
+Route::middleware('auth')->middleware('status')->group(function () {
+
+  Route::get('lockscreen', 'LockAccountController@lockscreen')->name('lockscreen');
+  Route::post('lockscreen', 'LockAccountController@unlock')->name('post_lockscreen');
+  Route::get('/image/external', 'UtilController@image')->name('image');
+
+  Route::middleware('lock')->group(function () {
 
   Route::get('/', 'HomeController@index')->name('home');
 
@@ -183,9 +189,7 @@ Route::middleware('auth')->middleware('status')->middleware('lock')->group(funct
 
   });
 
-  Route::get('lockscreen', 'LockAccountController@lockscreen')->name('lockscreen');
-  Route::post('lockscreen', 'LockAccountController@unlock')->name('post_lockscreen');
-  Route::get('/image/external', 'UtilController@image')->name('image');
+  });
 
 });
 

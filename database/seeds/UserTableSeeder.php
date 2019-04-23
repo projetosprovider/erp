@@ -100,7 +100,7 @@ class UserTableSeeder extends Seeder
               ]);
 
               $user = User::create([
-                'nick'                           => str_slug($name),
+                'nick'                           => str_slug($login),
                 'email'                          => trim($userEmail),
                 'password'                       => Hash::make('123123'),
                 'avatar' => $avatar,
