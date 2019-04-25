@@ -23,6 +23,8 @@ class CreateCoursesTable extends Migration
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
 
+            $table->boolean('active')->default(true);
+
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });

@@ -12,7 +12,7 @@ class DepartmentTableSeeder extends Seeder
      */
     public function run()
     {
-        $itens = ['Diretoria', 'Departamento Contábil', 'Departamento Pessoal', 'Financeiro', 'Entregas', 'Tecnologia da Informação', 'Arquivo', 'Treinamentos', 'Operacional'];
+        $itens = ['Departamento Contábil', 'Departamento Pessoal', 'Financeiro', 'Expedição', 'Tecnologia da Informação', 'Arquivo', 'Treinamentos', 'Operacional', 'Diretoria'];
 
         foreach ($itens as $item) {
             $departamento = new Department();

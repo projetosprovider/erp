@@ -8,7 +8,7 @@
         <h6 class="font-13 m-t-0 m-b-30">Menu de opções</h6>
 
         @permission('create.clientes')
-            <a href="{{ route('courses.create') }}" class="btn btn-custom m-t-lg">Nova Turma</a>
+            <a href="{{ route('teams.create') }}" class="btn btn-custom m-t-lg">Nova Turma</a>
         @endpermission
 
     </div>

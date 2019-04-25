@@ -27,14 +27,27 @@ $factory->define(User::class, function (Faker $faker) {
 */
 
 $factory->define(App\Models\Client::class, function (Faker $faker) {
+    $faker->addProvider(new \Faker\Provider\pt_BR\Address($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Company($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Internet($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Payment($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\PhoneNumber($faker));
     return [
         'name' => $faker->company,
-        'email' => $faker->unique()->safeEmail,
+        'email' => $faker->unique()->companyEmail,
         'phone' => $faker->phoneNumber,
+        'document' => $faker->cnpj,
     ];
 });
 
 $factory->define(App\Models\Client\Address::class, function (Faker $faker) {
+    $faker->addProvider(new \Faker\Provider\pt_BR\Address($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Company($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Internet($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Payment($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\PhoneNumber($faker));
     return [
         'client_id' => factory('App\Models\Client')->create()->id,
 
@@ -54,5 +67,25 @@ $factory->define(App\Models\Client\Address::class, function (Faker $faker) {
         'user_id' => 1,
         'is_default' => true,
         'lat' => $faker->latitude($min = -90, $max = 90) ,
+    ];
+});
+
+$factory->define(App\Models\Client\Employee::class, function (Faker $faker) {
+    $faker->addProvider(new \Faker\Provider\pt_BR\Address($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Company($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Internet($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Payment($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
+    $faker->addProvider(new \Faker\Provider\pt_BR\PhoneNumber($faker));
+    return [
+        'company_id' => factory('App\Models\Client')->create()->id,
+
+        'name' => $faker->name,
+        'email' => $faker->companyEmail,
+        'phone' => $faker->phoneNumber,
+        'cpf' => $faker->cpf ,
+        'created_by' => 1,
+        'active' => true
+
     ];
 });

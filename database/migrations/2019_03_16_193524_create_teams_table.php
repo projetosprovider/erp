@@ -18,10 +18,19 @@ class CreateTeamsTable extends Migration
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses');
             $table->integer('teacher_id')->unsigned();
-            $table->foreign('teacher_id')->references('id')->on('teachers');
-            $table->enum('status_class', ['RESERVADO', 'EM ANDAMENTO', 'FINALIZADA', 'CANCELADA'])->default('RESERVADO');
-            $table->integer('limit_students')->nullable();
+            $table->foreign('teacher_id')->references('id')->on('users');
+            $table->enum('status', ['RESERVADO', 'EM ANDAMENTO', 'FINALIZADA', 'CANCELADA'])->default('RESERVADO');
+            $table->integer('vacancies')->nullable();
+            $table->uuid('uuid')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('team_schedule', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('team_id')->unsigned();
+            $table->foreign('team_id')->references('id')->on('teams');
             $table->datetime('start');
+            $table->datetime('end');
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });
@@ -34,6 +43,7 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('team_schedule');
         Schema::dropIfExists('teams');
     }
 }

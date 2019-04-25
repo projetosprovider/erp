@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamStudentsTable extends Migration
+class CreateTeamEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateTeamStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('team_students', function (Blueprint $table) {
+        Schema::create('team_employees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('team_id')->unsigned();
             $table->foreign('team_id')->references('id')->on('teams');
-            $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->enum('status_student', ['PRE-AGENDADO', 'AGENDADO', 'CONFIRMADO', 'CANCELADO', 'FALTA'])->default('PRE-AGENDADO');
+            $table->integer('employee_id')->unsigned();
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->enum('status', ['PRE-AGENDADO', 'AGENDADO', 'CONFIRMADO', 'CANCELADO', 'FALTA'])->default('PRE-AGENDADO');
             $table->integer('approved')->default(false);
+            $table->uuid('uuid')->unique();
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateTeamStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('team_employees');
     }
 }

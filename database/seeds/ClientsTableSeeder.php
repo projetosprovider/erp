@@ -16,6 +16,9 @@ class ClientsTableSeeder extends Seeder
         ->create()
         ->each(function ($client) {
             $client->addresses()->save(factory(App\Models\Client\Address::class)->make());
+            $client->employees()->save(factory(App\Models\Client\Employee::class)->make());
+            $client->employees()->save(factory(App\Models\Client\Employee::class)->make());
+            $client->employees()->save(factory(App\Models\Client\Employee::class)->make());
         });;
     }
 }

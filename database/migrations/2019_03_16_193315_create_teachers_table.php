@@ -19,6 +19,7 @@ class CreateTeachersTable extends Migration
             $table->string('cpf');
             $table->string('phone')->nulable();
             $table->string('email')->nulable();
+            $table->boolean('active')->default(true);
             $table->uuid('uuid')->unique();
             $table->timestamps();
         });

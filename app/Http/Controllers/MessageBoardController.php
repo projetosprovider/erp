@@ -82,14 +82,14 @@ class MessageBoardController extends Controller
 
 
         }
-
+/*
         foreach ($data['categories'] as $key => $item) {
             Category::create([
               'category_id' => $item,
               'board_id' => $messageBoard->id
             ]);
         }
-
+*/
         $departments = $data['departments'];
         $usersList = $data['to'];
 

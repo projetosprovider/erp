@@ -19,14 +19,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                         </div>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Informe o nome">
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control" placeholder="Informe o nome">
 
                     </div>
                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                 </div>
 
 
-                <div class="form-group {!! $errors->has('document') ? 'has-error' : '' !!}">
+                <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                     <label class="col-form-label" for="email">Email</label>
                     <div class="input-group">
                         <input type="text" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Informe o email">
@@ -43,13 +43,13 @@
                         <input type="text" id="cpf" name="cpf" value="{{ old('cpf') }}" class="form-control" placeholder="Informe o CPF">
 
                     </div>
-                    {!! $errors->first('document', '<p class="help-block">:message</p>') !!}
+                    {!! $errors->first('cpf', '<p class="help-block">:message</p>') !!}
                 </div>
 
                 <div class="form-group {!! $errors->has('phone') ? 'has-error' : '' !!}">
                     <label class="col-form-label" for="phone">Telefone</label>
                     <div class="input-group">
-                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Informe o Telefone">
+                        <input type="text" id="phone" name="phone" value="{{ old('phone') }}" class="form-control" placeholder="Informe o Telefone">
 
                     </div>
                     {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}

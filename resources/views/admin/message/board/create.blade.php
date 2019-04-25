@@ -41,16 +41,6 @@
                   </div>
               </div>
 
-              <div class="form-group row"><label class="col-sm-2 col-form-label">Categorias:</label>
-                  <div class="col-sm-10">
-                    <select class="select2" data-live-search="true" title="Selecione" data-style="btn-white" data-width="100%" name="categories[]" multiple="multiple" required>
-                      @foreach($categories as $category)
-                          <option value="{{ $category->id }}">{{ $category->name }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-              </div>
-
               <div class="form-group row"><label class="col-sm-2 col-form-label">Assunto:</label>
                   <div class="col-sm-10"><input required name="subject" type="text" class="form-control" value=""></div>
               </div>
@@ -58,7 +48,7 @@
               <div class="form-group row"><label class="col-sm-2 col-form-label">Anexos:</label>
 
                   <div class="col-sm-10">
-                    <input name="files[]" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
+                    <input name="files[]" data-buttonText="Selecionar Arquivos" data-dragdrop="true"  data-buttonName="btn-custom" data-badge="true" type="file" data-input="true" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" class="filestyle" multiple/>
                   </div>
 
               </div>

@@ -14,24 +14,40 @@ class OccupationTableSeeder extends Seeder
     {
         $itens = [
           [
-            'name' => 'Cargo A',
+            'name' => 'Assistente Administrativo',
             'department_id' => 1,
           ],
           [
-            'name' => 'Cargo B',
+            'name' => 'Coordenador',
             'department_id' => 1,
           ],
           [
-            'name' => 'Cargo C',
+            'name' => 'Coordenador',
             'department_id' => 2,
           ],
           [
-            'name' => 'Cargo D',
+            'name' => 'Estagiário',
             'department_id' => 3,
           ],
           [
             'name' => 'Entregador',
+            'department_id' => 4,
+          ],
+          [
+            'name' => 'Assistente de Sistemas',
             'department_id' => 5,
+          ],
+          [
+            'name' => 'Suporte SOC',
+            'department_id' => 5,
+          ],
+          [
+            'name' => 'Coordenador',
+            'department_id' => 5,
+          ],
+          [
+            'name' => 'Instrutor',
+            'department_id' => 7,
           ]
         ];
 

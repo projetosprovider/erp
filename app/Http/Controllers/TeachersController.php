@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Training\{Team, Course};
-use App\Models\Training\Team\Employee as TeamEmployees;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Client\Employee;
-use App\Models\Client as Company;
-use App\Models\People;
-use App\User;
+use App\Http\Controllers\Controller;
 
-class TeamsController extends Controller
+class TeachersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +14,7 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        $teams = Team::all();
-        return view('admin.training.teams.index', compact('teams'));
+        //
     }
 
     /**
@@ -31,10 +24,7 @@ class TeamsController extends Controller
      */
     public function create()
     {
-        $companies = Company::whereHas('employees')->get();
-        $courses = Course::where('active', true)->get();
-        $teachers = People::where('occupation_id', 9)->get();
-        return view('admin.training.teams.create', compact('companies', 'courses', 'teachers'));
+        //
     }
 
     /**
@@ -45,24 +35,7 @@ class TeamsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->request->all();
-
-        $course = Course::uuid($data['course_id']);
-        $teacher = User::uuid($data['teacher_id']);
-
-        $data['course_id'] = $course->id;
-        $data['teacher_id'] = $teacher->id;
-
-        $team = Team::create($data);
-
-        foreach ($data['employees'] as $key => $employeeID) {
-          TeamEmployees::create([
-            'team_id' => $team->id,
-            'employee_id' => Employee::uuid($employeeID)->id,
-          ]);
-        }
-
-        return redirect()->route('teams.index');
+        //
     }
 
     /**
