@@ -38,9 +38,21 @@ class TeamsController extends Controller
         return view('admin.training.teams.create', compact('companies', 'courses', 'teachers'));
     }
 
-    public function schedule($id, Request $request)
+    public function start($id, Request $request)
     {
+        $teams = Team::uuid($id);
 
+        if($teams->start > now()) {
+
+          notify()->flash('Aula não iniciada!', 'warning', [
+            'text' => 'A data de início deve ser igual a data agendada.'
+          ]);
+
+          return back();
+
+        }
+
+        dd($teams);
     }
 
     /**
@@ -125,7 +137,7 @@ class TeamsController extends Controller
         $courses = Course::where('active', true)->get();
         $teachers = People::where('occupation_id', 9)->get();
 
-        return view('admin.training.teams.schedule', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
+        return view('admin.training.teams.show', compact('team', 'teamCode', 'companies', 'courses', 'teachers', 'employeesSelected'));
     }
 
     /**

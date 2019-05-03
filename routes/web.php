@@ -191,6 +191,8 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
     Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
 
+    Route::post('team/{id}/start', 'TeamsController@start')->name('team_start');
+
   });
 
   });
