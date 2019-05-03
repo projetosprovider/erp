@@ -13,7 +13,29 @@ class Team extends Model
 
     protected $table = 'teams';
 
-    protected $fillable = ['course_id', 'teacher_id', 'status', 'vacancies'];
+    protected $fillable = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end'];
 
-    protected static $logAttributes = ['course_id', 'teacher_id', 'status', 'vacancies'];
+    protected $dates = ['start', 'end'];
+
+    protected static $logAttributes = ['course_id', 'teacher_id', 'status', 'vacancies', 'start', 'end'];
+
+    public function course()
+    {
+       return $this->belongsTo('App\Models\Training\Course');
+    }
+
+    public function teacher()
+    {
+       return $this->belongsTo('App\User', 'teacher_id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany('App\Models\Training\Team\Employee');
+    }
+
+    public function schedule()
+    {
+        return $this->hasMany('App\Models\Training\Team\Lessons');
+    }
 }

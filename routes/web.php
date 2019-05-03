@@ -187,6 +187,10 @@ Route::middleware('auth')->middleware('status')->group(function () {
     Route::resource('notifications', 'NotificationsController');
     Route::get('notifications-read', 'NotificationsController@markAsRead')->name('notifications_markasread');
 
+    Route::get('team/{id}/schedules', 'TeamsController@schedule')->name('team_schedules');
+    Route::put('team/{id}/employees/store', 'TeamsController@addEmployes')->name('teams_add_employees');
+    Route::delete('team/{id}/employees/{employee}/destroy', 'TeamsController@destroyEmployes')->name('teams_employee_destroy');
+
   });
 
   });

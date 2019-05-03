@@ -48,9 +48,18 @@
 
                       </div>
 
+                      <div class="span5 col-md-4" id="sandbox-container">
+                        <label class="col-form-label" for="course_id">Data</label>
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-md form-control inputDate" name="start" value="{{ now()->modify('+1 day')->format('d/m/Y') }}"/>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Até</span>
+                            </div>
+                            <input type="text" class="input-md form-control inputDate" name="end" value="{{ now()->modify('+2 day')->format('d/m/Y') }}"/>
+                        </div>
+                      </div>
 
-
-                      <div class="col-md-12">
+                      <div class="col-md-4">
 
                         <div class="form-group {!! $errors->has('employees') ? 'has-error' : '' !!}">
                             <label class="col-form-label" for="employees">Funcionários</label>
@@ -70,7 +79,7 @@
 
                       </div>
 
-                      <div class="col-md-12">
+                      <div class="col-md-4">
 
                         <div class="form-group {!! $errors->has('vacancies') ? 'has-error' : '' !!}">
                             <label class="col-form-label" for="vacancies">Vagas</label>
@@ -82,8 +91,6 @@
                         </div>
 
                       </div>
-
-
 
                   </div>
                 </div>

@@ -147,4 +147,14 @@ class Helper
         return $interval->format( '%y Anos' );
     }
 
+    public static function Initials($string = null) {
+        return array_reduce(
+            explode(' ', $string),
+            function ($initials, $word) {
+                return sprintf('%s%s', $initials, substr($word, 0, 1));
+            },
+            ''
+        );
+    }
+
 }

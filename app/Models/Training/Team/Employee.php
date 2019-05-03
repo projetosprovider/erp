@@ -16,4 +16,9 @@ class Employee extends Model
     protected $fillable = ['team_id', 'employee_id', 'status', 'approved'];
 
     protected static $logAttributes = ['team_id', 'employee_id', 'status', 'approved'];
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\Client\Employee');
+    }
 }

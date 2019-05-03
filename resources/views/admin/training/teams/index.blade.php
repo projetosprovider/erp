@@ -17,41 +17,43 @@
         @if($teams->isNotEmpty())
 
             <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Curso</th>
+                    <th>Instrutor</th>
+                    <th>Vagas</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody>
-                    @foreach($teams as $course)
+                    @foreach($teams as $team)
                         <tr>
                             <td class="project-title">
-                                <p>ID:</p>
-                                <a>{{$course->id}}</a>
+                                <a>{{$team->id}}</a>
                             </td>
 
                             <td class="project-title">
-                                <p>Titulo:</p>
-                                <a>{{$course->title}}</a>
+                                <a>{{$team->course->title}}</a>
                             </td>
 
                             <td class="project-title">
-                                <p>Descrição:</p>
-                                <a>{{$course->description}}</a>
+                                <a>{{$team->teacher->person->name ?? '-'}}</a>
                             </td>
 
                             <td class="project-title">
-                                <p>Carga Horária:</p>
-                                <a>{{$course->workload}} horas</a>
-                            </td>
-
-                            <td class="project-title">
-                                <p>Adicionado em:</p>
-                                <a>{{$course->created_at->format('d/m/Y H:i')}}</a>
+                                <a>{{$team->employees->count()}} de {{$team->vacancies}}</a>
+                                <p class="lead text-danger">{{ ($team->employees->count() / intval($team->vacancies)) * 100 }}%</p>
                             </td>
 
                             <td class="project-actions">
+
                               @permission('edit.cursos')
-                                <a href="{{route('courses.edit', ['id' => $course->uuid])}}" class="btn btn-white btn-block"><i class="fa fa-pencil"></i> Editar</a>
+                                <a href="{{route('teams.show', ['id' => $team->uuid])}}" class="btn btn-custom btn-sm"><i class="fa fa-list"></i> Cronograma</a>
                               @endpermission
 
                               @permission('delete.cursos')
-                                <a data-route="{{route('courses.destroy', ['id' => $course->uuid])}}" class="btn btn-danger btn-block btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
+                                <a data-route="{{route('courses.destroy', ['id' => $team->uuid])}}" class="btn btn-danger btn-sm btnRemoveItem"><i class="fa fa-close"></i> Remover</a>
                               @endpermission
                             </td>
 
@@ -59,8 +61,6 @@
                     @endforeach
                 </tbody>
             </table>
-
-            {{ $courses->links() }}
 
         @else
           <div class="col-sm-12">
